@@ -4,6 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.equipo.candidatoinfo.ui.home.HomeScreen
+import com.equipo.candidatoinfo.ui.detail.DetailScreen
+import com.equipo.candidatoinfo.ui.compare.CompareScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
@@ -22,15 +25,28 @@ fun AppNavigation() {
         startDestination = Screen.Home.route
     ) {
         composable(Screen.Home.route) {
-            // TODO: HomeScreen()
+            HomeScreen(
+                onNavigateToDetail = { id ->
+                    navController.navigate(Screen.Detail.createRoute(id))
+                },
+                onNavigateToCompare = {
+                    navController.navigate(Screen.Compare.route)
+                }
+            )
         }
 
-        composable(Screen.Detail.route) {
-            // TODO: DetailScreen()
+        composable(Screen.Detail.route) { backStackEntry ->
+            val candidateId = backStackEntry.arguments?.getString("candidateId") ?: ""
+            DetailScreen(
+                candidateId = candidateId,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         composable(Screen.Compare.route) {
-            // TODO: CompareScreen()
+            CompareScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
     }
 }
