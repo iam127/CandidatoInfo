@@ -27,14 +27,12 @@ fun AppNavigation() {
         composable(Screen.Home.route) {
             HomeScreen(
                 onNavigateToDetail = { id ->
-                    navController.navigate(Screen.Detail.createRoute(id))
-                },
+                    navController.navigate(Screen.Detail.createRoute(id))},
                 onNavigateToCompare = {
                     navController.navigate(Screen.Compare.route)
                 }
             )
         }
-
         composable(Screen.Detail.route) { backStackEntry ->
             val candidateId = backStackEntry.arguments?.getString("candidateId") ?: ""
             DetailScreen(
