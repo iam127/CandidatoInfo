@@ -66,9 +66,9 @@ git log --oneline        # Ver historial resumido
 
 | Día       |      Descripción |                                          Enlace                                                  |
 |-----------|------------------|--------------------------------------------------------------------------------------------------|
-| 🗓️ Día 1 | Configuración inicial, estructura Git, definición de roles y fuentes oficiales | [Ver Día 1](./documentacion/NOTAS_REUNION01.md) |
-| 🗓️ Día 2 | Creación del proyecto en Android Studio y estructura base en Kotlin + Compose | [Ver Día 2](./documentacion/NOTAS_REUNION02.md) |
-| 🗓️ Día 3 | 
+| 🗓️ Día 1 | Configuración inicial, estructura Git, definición de roles y fuentes oficiales | [Ver Día 1](./docs/NOTAS_REUNION01.md) |
+| 🗓️ Día 2 | Creación del proyecto en Android Studio y estructura base en Kotlin + Compose | [Ver Día 2](./docs/NOTAS_REUNION02.md) |
+|  🗓️ Día 3 | Actualizacions de los archivos par el buen funcionamiento del proyecto | [Ver Día 3](./docs/NOTAS_REUNION03.md) |
 
 
 
