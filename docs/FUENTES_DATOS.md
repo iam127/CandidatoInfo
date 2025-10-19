@@ -17,5 +17,3 @@ https://www.gob.pe/institucion/onpe/tema/procesos-electorales
 ## Objetivo
 Centralizar la información verificada de los candidatos, partidos políticos y propuestas legislativas.
 
-## 📁 Próximos pasos
-- Crear modelo de datos `Candidato` basado en la información de JNE.
