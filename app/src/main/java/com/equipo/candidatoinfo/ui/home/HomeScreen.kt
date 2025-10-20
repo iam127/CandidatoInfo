@@ -1,5 +1,6 @@
 package com.equipo.candidatoinfo.ui.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,6 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.equipo.candidatoinfo.data.CandidatoData
@@ -116,22 +120,24 @@ fun CandidatoCard(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Foto del candidato (placeholder)
-            Surface(
-                modifier = Modifier
-                    .size(60.dp)
-                    .clip(CircleShape),
-                color = Surface
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = candidato.nombre.first().toString(),
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = Primary
+            // Foto del candidato
+            if (candidato.fotoUrl.isNotEmpty()) {
+                val drawableId = getDrawableId(candidato.fotoUrl)
+                if (drawableId != null) {
+                    Image(
+                        painter = painterResource(id = drawableId),
+                        contentDescription = "Foto de ${candidato.nombreCompleto}",
+                        modifier = Modifier
+                            .size(60.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
                     )
+                } else {
+                    // Fallback si no encuentra la imagen
+                    AvatarFallback(candidato.nombre.first(), Modifier.size(60.dp))
                 }
+            } else {
+                AvatarFallback(candidato.nombre.first(), Modifier.size(60.dp))
             }
 
             Spacer(modifier = Modifier.width(16.dp))
@@ -195,5 +201,52 @@ fun CandidatoCard(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun AvatarFallback(initial: Char, modifier: Modifier = Modifier) {
+    Surface(
+        modifier = modifier.clip(CircleShape),
+        color = getColorForInitial(initial)
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            Text(
+                text = initial.toString(),
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+}
+
+@Composable
+private fun getColorForInitial(initial: Char): Color {
+    return when (initial.uppercaseChar()) {
+        'K' -> Color(0xFF9C27B0) // Morado
+        'V' -> Color(0xFF4CAF50) // Verde
+        'R' -> Color(0xFFFF5722) // Naranja
+        'H' -> Color(0xFF2196F3) // Azul
+        'C' -> Color(0xFFFF9800) // Amarillo
+        'Y' -> Color(0xFF795548) // Café
+        'G' -> Color(0xFF00BCD4) // Cyan
+        'A' -> Color(0xFF607D8B) // Gris
+        'P' -> Color(0xFFE91E63) // Rosa
+        else -> Primary
+    }
+}
+
+@Composable
+private fun getDrawableId(imageName: String): Int? {
+    val context = LocalContext.current
+    return try {
+        context.resources.getIdentifier(
+            imageName,
+            "drawable",
+            context.packageName
+        ).takeIf { it != 0 }
+    } catch (e: Exception) {
+        null
     }
 }
