@@ -2,8 +2,8 @@
 
 **Proyecto:** Aplicación móvil de transparencia electoral - Perú  
 **Versión:** v0.3 - Día 3  
-**Fecha:** 18 de octubre de 2025  
-**Probado por:** Matías Galván
+**Fecha:** 19 de octubre de 2025  
+**Probado por:** Matías Galván Guerrero
 
 ---
 
@@ -55,9 +55,32 @@
 **Estado:** ✅ **PASÓ**
 
 ---
+### ✅ Test 2: Búsqueda de Candidatos
 
+**Objetivo:** Verificar que el filtro de búsqueda funciona correctamente.
 
-### ✅ Test 2: Detalle del Candidato
+**Pasos:**
+1. En `HomeScreen`, hacer click en la barra de búsqueda
+2. Escribir "Keiko"
+3. Observar los resultados filtrados
+4. Borrar el texto de búsqueda
+5. Observar que vuelven todos los candidatos
+
+**Resultados esperados:**
+- ✅ Al escribir "Keiko", aparece solo Keiko Fujimori
+- ✅ La búsqueda no distingue mayúsculas/minúsculas
+- ✅ También busca por partido político
+- ✅ Al borrar la búsqueda, vuelven los 10 candidatos
+
+**Captura de pantalla:**
+
+<img width="265" height="535" alt="Test 2 - Búsqueda" src="https://github.com/user-attachments/assets/06dedd93-b523-4b1e-9b28-8657340fba80e" />
+
+**Estado:** ✅ **PASÓ**
+
+---
+
+### ✅ Test 3: Detalle del Candidato
 
 **Objetivo:** Verificar que la pantalla de detalle muestra toda la información.
 
@@ -93,7 +116,7 @@
 
 ---
 
-### ✅ Test 3: Comparador de Candidatos
+### ✅ Test 4: Comparador de Candidatos
 
 **Objetivo:** Verificar que se pueden comparar 2 candidatos lado a lado.
 
@@ -186,27 +209,6 @@
 
 ---
 
-## 💡 Mejoras Sugeridas para Día 4
-
-### Funcionalidad
-- [ ] Agregar selector de candidatos en `CompareScreen`
-- [ ] Implementar Intent para abrir URLs oficiales (JNE, Congreso)
-- [ ] Agregar botón flotante en `HomeScreen` para ir a Comparador
-- [ ] Agregar animaciones de transición entre pantallas
-
-### Datos
-- [ ] Agregar más candidatos (actualmente 10)
-- [ ] Agregar fotos reales de candidatos
-- [ ] Agregar más información: años en política, experiencia
-
-### UI/UX
-- [ ] Agregar skeleton loading mientras carga
-- [ ] Agregar mensajes de "No hay resultados" en búsqueda vacía
-- [ ] Mejorar accesibilidad (content descriptions)
-- [ ] Agregar modo oscuro
-
----
-
 ## ✅ Conclusión
 
 **Estado general del Día 3:** ✅ **COMPLETADO EXITOSAMENTE**
@@ -222,9 +224,8 @@ La aplicación cumple con todos los requerimientos funcionales del Día 3:
 
 ---
 
-**Probado por:** Matías Galván  
-**Fecha:** 18/10/2025  
-**Firma digital:** ✅ Aprobado para producción
+**Probado por:** Matías Galván Guerrero
+**Fecha:** 19/10/2025  
 
 ---
 
