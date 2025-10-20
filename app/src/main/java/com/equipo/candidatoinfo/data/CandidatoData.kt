@@ -1,6 +1,5 @@
 package com.equipo.candidatoinfo.data
 
-
 import com.equipo.candidatoinfo.model.*
 
 object CandidatoData {
@@ -16,7 +15,7 @@ object CandidatoData {
                 cargo = Cargo.CONGRESO,
                 region = "Lima",
                 edad = 48,
-                fotoUrl = "",
+                fotoUrl = "keiko_fujimori",
                 biografia = "Lideresa de Fuerza Popular. Economista y administradora por la Universidad de Boston. Hija del ex presidente Alberto Fujimori. Ha sido candidata presidencial en 2011, 2016 y 2021.",
                 fuenteOficial = "https://www.congreso.gob.pe",
                 denuncias = listOf(
@@ -51,7 +50,7 @@ object CandidatoData {
                 cargo = Cargo.CONGRESO,
                 region = "Cusco",
                 edad = 43,
-                fotoUrl = "",
+                fotoUrl = "veronika_mendoza",
                 biografia = "Psicóloga social y política peruana. Ex congresista (2011-2016). Candidata presidencial en 2016 y 2021. Fundadora del Movimiento Nuevo Perú.",
                 fuenteOficial = "https://www.jne.gob.pe",
                 denuncias = emptyList(),
@@ -84,7 +83,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Lima",
                 edad = 60,
-                fotoUrl = "",
+                fotoUrl = "rafael_lopez_aliaga",
                 biografia = "Empresario peruano, alcalde de Lima desde 2023. Ingeniero industrial por la Universidad de Lima. Fundador de Renovación Popular. Candidato presidencial en 2021.",
                 fuenteOficial = "https://www.munlima.gob.pe",
                 denuncias = listOf(
@@ -119,7 +118,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Lima",
                 edad = 82,
-                fotoUrl = "",
+                fotoUrl = "hernando_de_soto",
                 biografia = "Economista peruano de renombre internacional. Presidente del Instituto Libertad y Democracia (ILD). Autor de 'El Otro Sendero' y 'El Misterio del Capital'. Candidato presidencial en 2021.",
                 fuenteOficial = "https://www.jne.gob.pe",
                 denuncias = emptyList(),
@@ -144,7 +143,7 @@ object CandidatoData {
                 cargo = Cargo.CONGRESO,
                 region = "La Libertad",
                 edad = 74,
-                fotoUrl = "",
+                fotoUrl = "cesar_acuna",
                 biografia = "Empresario y político peruano. Fundador de la Universidad César Vallejo. Ex alcalde de Trujillo (2007-2014) y gobernador regional de La Libertad (2019-2022). Candidato presidencial en 2016 y 2021.",
                 fuenteOficial = "https://www.jne.gob.pe",
                 denuncias = listOf(
@@ -188,7 +187,7 @@ object CandidatoData {
                 cargo = Cargo.CONGRESO,
                 region = "Puno",
                 edad = 71,
-                fotoUrl = "",
+                fotoUrl = "yonhy_lescano",
                 biografia = "Abogado y político peruano. Congresista en diversos períodos desde 2001. Ex ministro de Defensa (2011-2012). Candidato presidencial en 2021.",
                 fuenteOficial = "https://www.congreso.gob.pe",
                 denuncias = listOf(
@@ -231,7 +230,7 @@ object CandidatoData {
                 cargo = Cargo.CONGRESO,
                 region = "Lima",
                 edad = 41,
-                fotoUrl = "",
+                fotoUrl = "george_forsyth",
                 biografia = "Ex futbolista profesional y político peruano. Ex alcalde de La Victoria (2019-2021). Candidato presidencial en 2021.",
                 fuenteOficial = "https://www.jne.gob.pe",
                 denuncias = emptyList(),
@@ -256,7 +255,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Lima",
                 edad = 86,
-                fotoUrl = "",
+                fotoUrl = "alberto_fujimori",
                 biografia = "Ex presidente del Perú (1990-2000). Ingeniero agrónomo por la Universidad Nacional Agraria La Molina. Cumplió condena por violaciones a derechos humanos y corrupción. Indultado en diciembre de 2023.",
                 fuenteOficial = "https://www.jne.gob.pe",
                 denuncias = listOf(
@@ -300,7 +299,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Cajamarca",
                 edad = 54,
-                fotoUrl = "",
+                fotoUrl = "pedro_castillo",
                 biografia = "Ex presidente del Perú (julio 2021 - diciembre 2022). Profesor rural y sindicalista. Su gobierno terminó tras intento de golpe de estado y fue vacado por el Congreso. Actualmente en prisión preventiva.",
                 fuenteOficial = "https://www.jne.gob.pe",
                 denuncias = listOf(
@@ -344,7 +343,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Lima",
                 edad = 61,
-                fotoUrl = "",
+                fotoUrl = "antauro_humala",
                 biografia = "Ex militar y político peruano. Hermano del ex presidente Ollanta Humala. Líder del movimiento etnocacerista. Cumplió condena de 19 años por el 'Andahuaylazo' (2005). Liberado en agosto de 2022.",
                 fuenteOficial = "https://www.jne.gob.pe",
                 denuncias = listOf(
