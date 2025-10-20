@@ -1,5 +1,6 @@
 package com.equipo.candidatoinfo.ui.compare
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,9 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.equipo.candidatoinfo.R
 import com.equipo.candidatoinfo.data.CandidatoData
 import com.equipo.candidatoinfo.model.Candidato
 import com.equipo.candidatoinfo.ui.theme.*
@@ -147,24 +152,53 @@ fun CandidatoCompareHeader(
     candidato: Candidato,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+
+    // Mapeo de IDs de candidatos a recursos drawable
+    val photoResourceId = when (candidato.id) {
+        "1" -> R.drawable.keiko_fujimori
+        "2" -> R.drawable.veronika_mendoza
+        "3" -> R.drawable.rafael_lopez_aliaga
+        "4" -> R.drawable.yonhy_lescano
+        "5" -> R.drawable.cesar_acuna
+        "6" -> R.drawable.hernando_de_soto
+        "7" -> R.drawable.george_forsyth
+        "8" -> R.drawable.pedro_castillo
+        "9" -> R.drawable.alberto_fujimori
+        "10" -> R.drawable.antauro_humala
+        else -> null
+    }
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Surface(
-            modifier = Modifier
-                .size(80.dp)
-                .clip(CircleShape),
-            color = Surface
-        ) {
-            Box(
-                contentAlignment = Alignment.Center
+        // Mostrar imagen si existe, sino mostrar inicial
+        if (photoResourceId != null) {
+            Image(
+                painter = painterResource(id = photoResourceId),
+                contentDescription = "Foto de ${candidato.nombreCompleto}",
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            Surface(
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape),
+                color = Surface
             ) {
-                Text(
-                    text = candidato.nombre.first().toString(),
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = Primary
-                )
+                Box(
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = candidato.nombre.first().toString(),
+                        style = MaterialTheme.typography.headlineLarge,
+                        color = Primary
+                    )
+                }
             }
         }
 
