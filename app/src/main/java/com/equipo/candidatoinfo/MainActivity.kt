@@ -38,16 +38,14 @@ fun PreviewApp() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "Alberto Fujimori")
 @Composable
-fun PreviewDetailScreen() {
+fun PreviewDetailScreen8() {
     CandidatoInfoTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            DetailScreen(
-                candidateId = "1", // Usa un ID válido de tu CandidatoData
-                onNavigateBack = {} // Función vacía para el preview
-            )
-        }
+        DetailScreen(
+            candidateId = "candidato_8",
+            onNavigateBack = {}
+        )
     }
 }
 
