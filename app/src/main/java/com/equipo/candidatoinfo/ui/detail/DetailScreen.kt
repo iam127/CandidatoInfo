@@ -1,20 +1,5 @@
 package com.equipo.candidatoinfo.ui.detail
 
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.equipo.candidatoinfo.util.IntentUtils
-import androidx.compose.material.icons.filled.OpenInNew
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Gavel
-import androidx.compose.material.icons.filled.AccountBalance
-import androidx.compose.material.icons.filled.Balance
-import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -46,7 +31,6 @@ fun DetailScreen(
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
-    // Cargar candidato cuando cambia el ID
     LaunchedEffect(candidateId) {
         viewModel.loadCandidato(candidateId)
     }
@@ -99,18 +83,15 @@ fun DetailScreen(
                         .fillMaxSize()
                         .padding(paddingValues)
                 ) {
-                    // Header con foto y datos básicos
                     item {
                         CandidatoHeader(candidato)
                     }
 
-                    // Información Personal
                     item {
                         SectionTitle("Información Personal")
                         InformacionPersonalCard(candidato)
                     }
 
-                    // Denuncias y Antecedentes
                     if (candidato.denuncias.isNotEmpty()) {
                         item {
                             SectionTitle("Denuncias y Antecedentes")
@@ -120,7 +101,6 @@ fun DetailScreen(
                         }
                     }
 
-                    // Proyectos Presentados
                     if (candidato.proyectos.isNotEmpty()) {
                         item {
                             SectionTitle("Proyectos Presentados")
@@ -130,11 +110,9 @@ fun DetailScreen(
                         }
                     }
 
-                    // Botones de acción
                     item {
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        // Botón Ver en JNE
                         Button(
                             onClick = {
                                 IntentUtils.openUrl(context, candidato.fuenteOficial)
@@ -147,7 +125,7 @@ fun DetailScreen(
                             )
                         ) {
                             Icon(
-                                imageVector = Icons.Default.OpenInNew,
+                                imageVector = Icons.Default.Info,
                                 contentDescription = null,
                                 modifier = Modifier.size(20.dp)
                             )
@@ -157,7 +135,6 @@ fun DetailScreen(
 
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        // Botón Compartir
                         OutlinedButton(
                             onClick = {
                                 val shareText = IntentUtils.getCandidatoShareText(
@@ -199,7 +176,6 @@ fun CandidatoHeader(candidato: Candidato) {
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Foto del candidato (placeholder)
         Surface(
             modifier = Modifier
                 .size(120.dp)
@@ -220,7 +196,6 @@ fun CandidatoHeader(candidato: Candidato) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Nombre completo
         Text(
             text = candidato.nombreCompleto,
             style = MaterialTheme.typography.headlineMedium,
@@ -230,7 +205,6 @@ fun CandidatoHeader(candidato: Candidato) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Partido político
         Text(
             text = candidato.partidoPolitico,
             style = MaterialTheme.typography.titleMedium,
@@ -239,11 +213,9 @@ fun CandidatoHeader(candidato: Candidato) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Chips de información básica
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Edad
             AssistChip(
                 onClick = { },
                 label = { Text("${candidato.edad} años") },
@@ -256,7 +228,6 @@ fun CandidatoHeader(candidato: Candidato) {
                 }
             )
 
-            // Cargo
             AssistChip(
                 onClick = { },
                 label = {
@@ -271,11 +242,9 @@ fun CandidatoHeader(candidato: Candidato) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Indicadores de transparencia
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Badge de denuncias
             if (candidato.numeroDenuncias > 0) {
                 AssistChip(
                     onClick = { },
@@ -299,7 +268,6 @@ fun CandidatoHeader(candidato: Candidato) {
                 )
             }
 
-            // Badge de proyectos
             if (candidato.numeroProyectos > 0) {
                 AssistChip(
                     onClick = { },
@@ -308,7 +276,7 @@ fun CandidatoHeader(candidato: Candidato) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Description,
+                                imageVector = Icons.Default.Star,
                                 contentDescription = null,
                                 modifier = Modifier.size(16.dp)
                             )
@@ -351,7 +319,6 @@ fun InformacionPersonalCard(candidato: Candidato) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            // Biografía
             Text(
                 text = "Biografía",
                 style = MaterialTheme.typography.titleSmall,
@@ -367,7 +334,6 @@ fun InformacionPersonalCard(candidato: Candidato) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Región
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -387,13 +353,12 @@ fun InformacionPersonalCard(candidato: Candidato) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Asistencia (si aplica)
             if (candidato.asistencia != null) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        imageVector = Icons.Default.CheckCircle,
+                        imageVector = Icons.Default.Done,
                         contentDescription = null,
                         tint = Secondary,
                         modifier = Modifier.size(20.dp)
@@ -429,17 +394,12 @@ fun DenunciaCard(denuncia: Denuncia) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Título con ícono
                 Row(
                     modifier = Modifier.weight(1f),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        imageVector = when (denuncia.tipo) {
-                            TipoDenuncia.PENAL -> Icons.Default.Gavel
-                            TipoDenuncia.ADMINISTRATIVA -> Icons.Default.AccountBalance
-                            TipoDenuncia.CIVIL -> Icons.Default.Balance
-                        },
+                        imageVector = Icons.Default.Warning,
                         contentDescription = null,
                         tint = Error,
                         modifier = Modifier.size(20.dp)
@@ -453,7 +413,6 @@ fun DenunciaCard(denuncia: Denuncia) {
                     )
                 }
 
-                // Badge de estado
                 AssistChip(
                     onClick = { },
                     label = {
@@ -483,7 +442,6 @@ fun DenunciaCard(denuncia: Denuncia) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Descripción
             Text(
                 text = denuncia.descripcion,
                 style = MaterialTheme.typography.bodyMedium,
@@ -492,12 +450,11 @@ fun DenunciaCard(denuncia: Denuncia) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Fecha con ícono
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.CalendarToday,
+                    imageVector = Icons.Default.DateRange,
                     contentDescription = null,
                     modifier = Modifier.size(16.dp),
                     tint = TextSecondary
@@ -512,7 +469,6 @@ fun DenunciaCard(denuncia: Denuncia) {
         }
     }
 }
-
 @Composable
 fun ProyectoCard(proyecto: Proyecto) {
     Card(
@@ -532,7 +488,6 @@ fun ProyectoCard(proyecto: Proyecto) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Título
                 Text(
                     text = proyecto.titulo,
                     style = MaterialTheme.typography.titleSmall,
@@ -541,7 +496,6 @@ fun ProyectoCard(proyecto: Proyecto) {
                     modifier = Modifier.weight(1f)
                 )
 
-                // Badge de estado
                 AssistChip(
                     onClick = { },
                     label = {
@@ -551,6 +505,7 @@ fun ProyectoCard(proyecto: Proyecto) {
                                 EstadoProyecto.EN_DEBATE -> "En debate"
                                 EstadoProyecto.APROBADO -> "Aprobado"
                                 EstadoProyecto.RECHAZADO -> "Rechazado"
+                                else -> "Desconocido"  // ✅ AGREGAR ESTO
                             },
                             style = MaterialTheme.typography.labelSmall
                         )
@@ -561,12 +516,14 @@ fun ProyectoCard(proyecto: Proyecto) {
                             EstadoProyecto.EN_DEBATE -> Color(0xFFFFF3E0)
                             EstadoProyecto.APROBADO -> Secondary.copy(alpha = 0.1f)
                             EstadoProyecto.RECHAZADO -> Error.copy(alpha = 0.1f)
+                            else -> Surface  // ✅ AGREGAR ESTO
                         },
                         labelColor = when (proyecto.estado) {
                             EstadoProyecto.PRESENTADO -> Primary
                             EstadoProyecto.EN_DEBATE -> Color(0xFFFF6F00)
                             EstadoProyecto.APROBADO -> Secondary
                             EstadoProyecto.RECHAZADO -> Error
+                            else -> TextSecondary  // ✅ AGREGAR ESTO
                         }
                     )
                 )
@@ -574,7 +531,6 @@ fun ProyectoCard(proyecto: Proyecto) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Descripción
             Text(
                 text = proyecto.descripcion,
                 style = MaterialTheme.typography.bodyMedium,
@@ -583,12 +539,11 @@ fun ProyectoCard(proyecto: Proyecto) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Fecha
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.CalendarToday,
+                    imageVector = Icons.Default.DateRange,
                     contentDescription = null,
                     modifier = Modifier.size(16.dp),
                     tint = TextSecondary

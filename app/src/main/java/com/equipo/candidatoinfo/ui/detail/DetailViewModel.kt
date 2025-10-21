@@ -1,5 +1,6 @@
 package com.equipo.candidatoinfo.ui.detail
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.equipo.candidatoinfo.data.CandidatoData
@@ -23,9 +24,12 @@ class DetailViewModel : ViewModel() {
     fun loadCandidato(candidatoId: String) {
         viewModelScope.launch {
             try {
+                Log.d("DetailViewModel", "Cargando candidato con ID: $candidatoId")
                 _uiState.value = _uiState.value.copy(isLoading = true)
 
                 val candidato = CandidatoData.getCandidatoById(candidatoId)
+
+                Log.d("DetailViewModel", "Candidato encontrado: ${candidato?.nombreCompleto ?: "NULL"}")
 
                 if (candidato != null) {
                     _uiState.value = _uiState.value.copy(
@@ -33,12 +37,14 @@ class DetailViewModel : ViewModel() {
                         isLoading = false
                     )
                 } else {
+                    Log.e("DetailViewModel", "Candidato no encontrado con ID: $candidatoId")
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
                         error = "Candidato no encontrado"
                     )
                 }
             } catch (e: Exception) {
+                Log.e("DetailViewModel", "Error al cargar candidato", e)
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     error = "Error al cargar candidato: ${e.message}"

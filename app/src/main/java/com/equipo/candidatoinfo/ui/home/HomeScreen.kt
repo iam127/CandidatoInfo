@@ -1,5 +1,8 @@
 package com.equipo.candidatoinfo.ui.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -7,8 +10,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,10 +23,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.equipo.candidatoinfo.model.Candidato
 import com.equipo.candidatoinfo.model.Cargo
 import com.equipo.candidatoinfo.ui.theme.*
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,17 +45,22 @@ fun HomeScreen(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Primary,
                     titleContentColor = Color.White
-                ),
-                actions = {
-                    IconButton(onClick = onNavigateToCompare) {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Comparar",
-                            tint = Color.White
-                        )
-                    }
-                }
+                )
             )
+        },
+        floatingActionButton = {
+            if (uiState.filteredCandidatos.size >= 2) {
+                FloatingActionButton(
+                    onClick = onNavigateToCompare,
+                    containerColor = Secondary
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Comparar candidatos",
+                        tint = Color.White
+                    )
+                }
+            }
         }
     ) { paddingValues ->
         Column(
@@ -65,7 +68,6 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            // Barra de búsqueda
             OutlinedTextField(
                 value = uiState.searchQuery,
                 onValueChange = { viewModel.onSearchQueryChange(it) },
@@ -79,7 +81,7 @@ fun HomeScreen(
                 trailingIcon = {
                     if (uiState.searchQuery.isNotEmpty()) {
                         IconButton(onClick = { viewModel.clearSearch() }) {
-                            Icon(Icons.Default.Clear, contentDescription = "Limpiar")
+                            Icon(Icons.Default.Close, contentDescription = "Limpiar")
                         }
                     }
                 },
@@ -90,7 +92,6 @@ fun HomeScreen(
                 )
             )
 
-            // Filtros por cargo
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -122,7 +123,79 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Estado de carga
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Ordenar por:",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = TextSecondary
+                )
+
+                var showSortMenu by remember { mutableStateOf(false) }
+
+                Box {
+                    OutlinedButton(
+                        onClick = { showSortMenu = true }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = "Ordenar",
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = when (uiState.sortOption) {
+                                SortOption.NOMBRE -> "Nombre"
+                                SortOption.DENUNCIAS_ASC -> "Menos denuncias"
+                                SortOption.DENUNCIAS_DESC -> "Más denuncias"
+                                SortOption.PROYECTOS_DESC -> "Más proyectos"
+                            }
+                        )
+                    }
+
+                    DropdownMenu(
+                        expanded = showSortMenu,
+                        onDismissRequest = { showSortMenu = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Nombre (A-Z)") },
+                            onClick = {
+                                viewModel.onSortChange(SortOption.NOMBRE)
+                                showSortMenu = false
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Menos denuncias") },
+                            onClick = {
+                                viewModel.onSortChange(SortOption.DENUNCIAS_ASC)
+                                showSortMenu = false
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Más denuncias") },
+                            onClick = {
+                                viewModel.onSortChange(SortOption.DENUNCIAS_DESC)
+                                showSortMenu = false
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Más proyectos") },
+                            onClick = {
+                                viewModel.onSortChange(SortOption.PROYECTOS_DESC)
+                                showSortMenu = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             when {
                 uiState.isLoading -> {
                     Box(
@@ -166,7 +239,6 @@ fun HomeScreen(
                     }
                 }
                 else -> {
-                    // Lista de candidatos
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
@@ -182,7 +254,7 @@ fun HomeScreen(
 
                         items(
                             items = uiState.filteredCandidatos,
-                            key = { it.id }  // ← IMPORTANTE para animaciones
+                            key = { it.id }
                         ) { candidato ->
                             AnimatedVisibility(
                                 visible = true,
@@ -195,7 +267,6 @@ fun HomeScreen(
                                 )
                             }
                         }
-
                     }
                 }
             }
@@ -223,7 +294,6 @@ fun CandidatoCard(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Foto del candidato (placeholder)
             Surface(
                 modifier = Modifier
                     .size(60.dp)
@@ -243,7 +313,6 @@ fun CandidatoCard(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // Información del candidato
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -268,7 +337,6 @@ fun CandidatoCard(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    // Badge del cargo
                     AssistChip(
                         onClick = { },
                         label = {
@@ -283,7 +351,6 @@ fun CandidatoCard(
                         )
                     )
 
-                    // Badge de denuncias (si tiene)
                     if (candidato.numeroDenuncias > 0) {
                         AssistChip(
                             onClick = { },

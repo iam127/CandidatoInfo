@@ -1,6 +1,5 @@
 package com.equipo.candidatoinfo.model
 
-
 data class Candidato(
     val id: String,
     val nombre: String,
@@ -9,12 +8,12 @@ data class Candidato(
     val cargo: Cargo,
     val region: String,
     val edad: Int,
-    val fotoUrl: String,
     val biografia: String,
-    val fuenteOficial: String,
+    val fotoUrl: String = "",
+    val fuenteOficial: String = "https://www.jne.gob.pe",
     val denuncias: List<Denuncia> = emptyList(),
     val proyectos: List<Proyecto> = emptyList(),
-    val asistencia: Double? = null
+    val asistencia: Int? = null  // ✅ CAMBIAR Double? A Int?
 ) {
     val nombreCompleto: String
         get() = "$nombre $apellido"

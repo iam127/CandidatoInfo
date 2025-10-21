@@ -1,13 +1,13 @@
 package com.equipo.candidatoinfo.model
 
 data class Denuncia(
-    val id: String,
+    val id: String = "",  // ✅ AGREGAR VALOR POR DEFECTO
     val titulo: String,
     val descripcion: String,
     val fecha: String,
     val estado: EstadoDenuncia,
     val tipo: TipoDenuncia,
-    val fuenteUrl: String
+    val fuenteUrl: String = ""  // ✅ AGREGAR VALOR POR DEFECTO
 )
 
 enum class EstadoDenuncia {
@@ -21,4 +21,3 @@ enum class TipoDenuncia {
     ADMINISTRATIVA,
     CIVIL
 }
-

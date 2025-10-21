@@ -1,9 +1,11 @@
 package com.equipo.candidatoinfo.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.equipo.candidatoinfo.ui.home.HomeScreen
 import com.equipo.candidatoinfo.ui.detail.DetailScreen
 import com.equipo.candidatoinfo.ui.compare.CompareScreen
@@ -27,13 +29,23 @@ fun AppNavigation() {
         composable(Screen.Home.route) {
             HomeScreen(
                 onNavigateToDetail = { id ->
-                    navController.navigate(Screen.Detail.createRoute(id))},
+                    navController.navigate(Screen.Detail.createRoute(id))
+                },
                 onNavigateToCompare = {
                     navController.navigate(Screen.Compare.route)
                 }
             )
         }
-        composable(Screen.Detail.route) { backStackEntry ->
+
+        // ✅ CAMBIO AQUÍ: Agregar arguments
+        composable(
+            route = Screen.Detail.route,
+            arguments = listOf(
+                navArgument("candidateId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
             val candidateId = backStackEntry.arguments?.getString("candidateId") ?: ""
             DetailScreen(
                 candidateId = candidateId,
@@ -49,6 +61,5 @@ fun AppNavigation() {
                 }
             )
         }
-
     }
 }
