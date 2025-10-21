@@ -27,25 +27,22 @@ import com.equipo.candidatoinfo.model.EstadoDenuncia
 import com.equipo.candidatoinfo.model.EstadoProyecto
 import com.equipo.candidatoinfo.model.Proyecto
 import com.equipo.candidatoinfo.ui.theme.*
+import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
     candidateId: String = "",
-    onNavigateBack: () -> Unit = {}
+    onNavigateBack: () -> Unit = {},
+    viewModel: DetailViewModel = viewModel()
 ) {
-    val candidato = remember(candidateId) {
-        CandidatoData.getCandidatoById(candidateId)
-    }
+    val uiState by viewModel.uiState.collectAsState()
 
-    if (candidato == null) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("Candidato no encontrado")
-        }
-        return
+    // Cargar candidato cuando cambia el ID
+    LaunchedEffect(candidateId) {
+        viewModel.loadCandidato(candidateId)
     }
 
     Scaffold(
@@ -65,61 +62,90 @@ fun DetailScreen(
             )
         }
     ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            // Header con foto y datos básicos
-            item {
-                CandidatoHeader(candidato)
-            }
-
-            // Información Personal
-            item {
-                SectionTitle("Información Personal")
-                InformacionPersonalCard(candidato)
-            }
-
-            // Denuncias y Antecedentes
-            if (candidato.denuncias.isNotEmpty()) {
-                item {
-                    SectionTitle("Denuncias y Antecedentes")
-                }
-                items(candidato.denuncias) { denuncia ->
-                    DenunciaCard(denuncia)
-                }
-            }
-
-            // Proyectos Presentados
-            if (candidato.proyectos.isNotEmpty()) {
-                item {
-                    SectionTitle("Proyectos Presentados")
-                }
-                items(candidato.proyectos) { proyecto ->
-                    ProyectoCard(proyecto)
-                }
-            }
-
-            // Botón para ver fuente oficial
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(
-                    onClick = { /* TODO: Abrir URL */ },
+        when {
+            uiState.isLoading -> {
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Primary
-                    )
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Text("Ver en JNE")
+                    CircularProgressIndicator()
                 }
-                Spacer(modifier = Modifier.height(32.dp))
+            }
+            uiState.error != null -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = uiState.error ?: "Error desconocido",
+                        color = Error
+                    )
+                }
+            }
+            uiState.candidato != null -> {
+                val candidato = uiState.candidato!!
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                ) {
+                    // Header con foto y datos básicos
+                    item {
+                        CandidatoHeader(candidato)
+                    }
+
+                    // Información Personal
+                    item {
+                        SectionTitle("Información Personal")
+                        InformacionPersonalCard(candidato)
+                    }
+
+                    // Denuncias y Antecedentes
+                    if (candidato.denuncias.isNotEmpty()) {
+                        item {
+                            SectionTitle("Denuncias y Antecedentes")
+                        }
+                        items(candidato.denuncias) { denuncia ->
+                            DenunciaCard(denuncia)
+                        }
+                    }
+
+                    // Proyectos Presentados
+                    if (candidato.proyectos.isNotEmpty()) {
+                        item {
+                            SectionTitle("Proyectos Presentados")
+                        }
+                        items(candidato.proyectos) { proyecto ->
+                            ProyectoCard(proyecto)
+                        }
+                    }
+
+                    // Botón para ver fuente oficial
+                    item {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(
+                            onClick = { /* TODO: Abrir URL */ },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Primary
+                            )
+                        ) {
+                            Text("Ver en JNE")
+                        }
+                        Spacer(modifier = Modifier.height(32.dp))
+                    }
+                }
             }
         }
     }
 }
+
 
 @Composable
 fun CandidatoHeader(candidato: Candidato) {
