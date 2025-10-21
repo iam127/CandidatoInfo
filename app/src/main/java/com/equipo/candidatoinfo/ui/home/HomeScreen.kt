@@ -21,6 +21,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.equipo.candidatoinfo.model.Candidato
 import com.equipo.candidatoinfo.model.Cargo
 import com.equipo.candidatoinfo.ui.theme.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -176,12 +180,22 @@ fun HomeScreen(
                             )
                         }
 
-                        items(uiState.filteredCandidatos) { candidato ->
-                            CandidatoCard(
-                                candidato = candidato,
-                                onClick = { onNavigateToDetail(candidato.id) }
-                            )
+                        items(
+                            items = uiState.filteredCandidatos,
+                            key = { it.id }  // ← IMPORTANTE para animaciones
+                        ) { candidato ->
+                            AnimatedVisibility(
+                                visible = true,
+                                enter = fadeIn(),
+                                exit = fadeOut()
+                            ) {
+                                CandidatoCard(
+                                    candidato = candidato,
+                                    onClick = { onNavigateToDetail(candidato.id) }
+                                )
+                            }
                         }
+
                     }
                 }
             }
