@@ -63,12 +63,16 @@ git merge develop        # Integrar develop
 git log --oneline        # Ver historial resumido
 
 ## 📚 Documentación por Día
+__________________________________________________________________________________________________________________________________
+| Día       |      Descripción |                                                                                         
 
-| Día       |      Descripción |                                          Enlace                                                  |
-|-----------|------------------|--------------------------------------------------------------------------------------------------|
-| 🗓️ Día 1 | Configuración inicial, estructura Git, definición de roles y fuentes oficiales | [Ver Día 1](./docs/NOTAS_REUNION01.md) |
-| 🗓️ Día 2 | Creación del proyecto en Android Studio y estructura base en Kotlin + Compose | [Ver Día 2](./docs/NOTAS_REUNION02.md) |
-|  🗓️ Día 3 | Actualizacions de los archivos par el buen funcionamiento del proyecto | [Ver Día 3](./docs/NOTAS_REUNION03.md) |
+🗓️ Día 1  Configuración inicial, estructura Git, definición de roles y fuentes oficiales | [Ver Día 1](./docs/NOTAS_REUNION01.md) 
+🗓️ Día 2  Creación del proyecto en Android Studio y estructura base en Kotlin + Compose | [Ver Día 2](./docs/NOTAS_REUNION02.md)
+
+🗓️ Día 3  Actualizacions de los archivos par el buen funcionamiento del proyecto | [Ver Día 3](./docs/NOTAS_REUNION03.md) |
+
+🗓️ Día 4  implementa una arquitectura MVVM robusta y escalable, preparada para la integración futura con APIs reales | [Ver Día 3](./docs/NOTAS_REUNION04.md) |
+
 
 
 
