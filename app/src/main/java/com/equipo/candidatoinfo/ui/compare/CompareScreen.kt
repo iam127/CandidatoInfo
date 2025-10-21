@@ -1,38 +1,36 @@
 package com.equipo.candidatoinfo.ui.compare
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.equipo.candidatoinfo.R
-import com.equipo.candidatoinfo.data.CandidatoData
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.equipo.candidatoinfo.model.Candidato
 import com.equipo.candidatoinfo.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CompareScreen(
-    onNavigateBack: () -> Unit = {}
+    onNavigateBack: () -> Unit = {},
+    onNavigateToDetail: (String) -> Unit = {},
+    viewModel: CompareViewModel = viewModel()
 ) {
-    // Para el Día 3, usaremos 2 candidatos fijos para demostración
-    val candidatos = CandidatoData.getCandidatosEjemplo()
-    val candidato1 = candidatos.getOrNull(0)
-    val candidato2 = candidatos.getOrNull(1)
+    val uiState by viewModel.uiState.collectAsState()
+    var showSelector1 by remember { mutableStateOf(false) }
+    var showSelector2 by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -51,139 +49,154 @@ fun CompareScreen(
             )
         }
     ) { paddingValues ->
-        if (candidato1 != null && candidato2 != null) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp)
-            ) {
-                // Headers de candidatos
-                item {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        CandidatoCompareHeader(candidato1, Modifier.weight(1f))
-                        Spacer(modifier = Modifier.width(16.dp))
-                        CandidatoCompareHeader(candidato2, Modifier.weight(1f))
+        when {
+            uiState.isLoading -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+            uiState.selectedCandidato1 != null && uiState.selectedCandidato2 != null -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                        .padding(16.dp)
+                ) {
+                    // Selectores de candidatos
+                    item {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            CandidatoSelector(
+                                candidato = uiState.selectedCandidato1!!,
+                                onClick = { showSelector1 = true },
+                                modifier = Modifier.weight(1f)
+                            )
+                            Spacer(modifier = Modifier.width(16.dp))
+                            CandidatoSelector(
+                                candidato = uiState.selectedCandidato2!!,
+                                onClick = { showSelector2 = true },
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(24.dp))
                     }
-                    Spacer(modifier = Modifier.height(24.dp))
-                }
 
-                // Comparación de denuncias
-                item {
-                    CompareRow(
-                        label = "Denuncias",
-                        value1 = candidato1.numeroDenuncias.toString(),
-                        value2 = candidato2.numeroDenuncias.toString(),
-                        highlightLower = true
-                    )
-                }
-
-                // Comparación de proyectos
-                item {
-                    CompareRow(
-                        label = "Proyectos",
-                        value1 = candidato1.numeroProyectos.toString(),
-                        value2 = candidato2.numeroProyectos.toString(),
-                        highlightLower = false
-                    )
-                }
-
-                // Comparación de asistencia
-                if (candidato1.asistencia != null && candidato2.asistencia != null) {
+                    // Comparación de denuncias
                     item {
                         CompareRow(
-                            label = "Asistencia",
-                            value1 = "${candidato1.asistencia}%",
-                            value2 = "${candidato2.asistencia}%",
+                            label = "Denuncias",
+                            value1 = uiState.selectedCandidato1!!.numeroDenuncias.toString(),
+                            value2 = uiState.selectedCandidato2!!.numeroDenuncias.toString(),
+                            highlightLower = true
+                        )
+                    }
+
+                    // Comparación de proyectos
+                    item {
+                        CompareRow(
+                            label = "Proyectos",
+                            value1 = uiState.selectedCandidato1!!.numeroProyectos.toString(),
+                            value2 = uiState.selectedCandidato2!!.numeroProyectos.toString(),
                             highlightLower = false
                         )
                     }
-                }
 
-                // Comparación de edad
-                item {
-                    CompareRow(
-                        label = "Edad",
-                        value1 = "${candidato1.edad} años",
-                        value2 = "${candidato2.edad} años",
-                        highlightLower = false
-                    )
-                }
-
-                // Botones para ver perfiles completos
-                item {
-                    Spacer(modifier = Modifier.height(24.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        OutlinedButton(
-                            onClick = { /* TODO: Navegar a detalle */ },
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text("Ver perfil")
+                    // Comparación de asistencia
+                    if (uiState.selectedCandidato1!!.asistencia != null &&
+                        uiState.selectedCandidato2!!.asistencia != null) {
+                        item {
+                            CompareRow(
+                                label = "Asistencia",
+                                value1 = "${uiState.selectedCandidato1!!.asistencia}%",
+                                value2 = "${uiState.selectedCandidato2!!.asistencia}%",
+                                highlightLower = false
+                            )
                         }
-                        Spacer(modifier = Modifier.width(16.dp))
-                        OutlinedButton(
-                            onClick = { /* TODO: Navegar a detalle */ },
-                            modifier = Modifier.weight(1f)
+                    }
+
+                    // Comparación de edad
+                    item {
+                        CompareRow(
+                            label = "Edad",
+                            value1 = "${uiState.selectedCandidato1!!.edad} años",
+                            value2 = "${uiState.selectedCandidato2!!.edad} años",
+                            highlightLower = false
+                        )
+                    }
+
+                    // Botones para ver perfiles completos
+                    item {
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
-                            Text("Ver perfil")
+                            OutlinedButton(
+                                onClick = { onNavigateToDetail(uiState.selectedCandidato1!!.id) },
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text("Ver perfil")
+                            }
+                            Spacer(modifier = Modifier.width(16.dp))
+                            OutlinedButton(
+                                onClick = { onNavigateToDetail(uiState.selectedCandidato2!!.id) },
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text("Ver perfil")
+                            }
                         }
                     }
                 }
             }
-        } else {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Selecciona candidatos para comparar")
-            }
         }
+    }
+
+    // Dialog para seleccionar Candidato 1
+    if (showSelector1) {
+        CandidatoSelectorDialog(
+            candidatos = uiState.allCandidatos,
+            onDismiss = { showSelector1 = false },
+            onSelect = {
+                viewModel.selectCandidato1(it)
+                showSelector1 = false
+            }
+        )
+    }
+
+    // Dialog para seleccionar Candidato 2
+    if (showSelector2) {
+        CandidatoSelectorDialog(
+            candidatos = uiState.allCandidatos,
+            onDismiss = { showSelector2 = false },
+            onSelect = {
+                viewModel.selectCandidato2(it)
+                showSelector2 = false
+            }
+        )
     }
 }
 
 @Composable
-fun CandidatoCompareHeader(
+fun CandidatoSelector(
     candidato: Candidato,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-
-    // Mapeo de IDs de candidatos a recursos drawable
-    val photoResourceId = when (candidato.id) {
-        "1" -> R.drawable.keiko_fujimori
-        "2" -> R.drawable.veronika_mendoza
-        "3" -> R.drawable.rafael_lopez_aliaga
-        "4" -> R.drawable.yonhy_lescano
-        "5" -> R.drawable.cesar_acuna
-        "6" -> R.drawable.hernando_de_soto
-        "7" -> R.drawable.george_forsyth
-        "8" -> R.drawable.pedro_castillo
-        "9" -> R.drawable.alberto_fujimori
-        "10" -> R.drawable.antauro_humala
-        else -> null
-    }
-
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+    Card(
+        modifier = modifier.clickable(onClick = onClick),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        // Mostrar imagen si existe, sino mostrar inicial
-        if (photoResourceId != null) {
-            Image(
-                painter = painterResource(id = photoResourceId),
-                contentDescription = "Foto de ${candidato.nombreCompleto}",
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
-            )
-        } else {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Surface(
                 modifier = Modifier
                     .size(80.dp)
@@ -200,27 +213,112 @@ fun CandidatoCompareHeader(
                     )
                 }
             }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = candidato.nombreCompleto,
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                color = TextPrimary
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = candidato.partidoPolitico,
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center,
+                color = TextSecondary,
+                maxLines = 2
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Cambiar",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Primary
+                )
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = "Cambiar",
+                    tint = Primary,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
         }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = candidato.nombreCompleto,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            color = TextPrimary
-        )
-
-        Spacer(modifier = Modifier.height(4.dp))
-
-        Text(
-            text = candidato.partidoPolitico,
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center,
-            color = TextSecondary
-        )
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CandidatoSelectorDialog(
+    candidatos: List<Candidato>,
+    onDismiss: () -> Unit,
+    onSelect: (Candidato) -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Seleccionar Candidato") },
+        text = {
+            LazyColumn {
+                items(candidatos.size) { index ->
+                    val candidato = candidatos[index]
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp)
+                            .clickable { onSelect(candidato) }
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Surface(
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .clip(CircleShape),
+                                color = Surface
+                            ) {
+                                Box(
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = candidato.nombre.first().toString(),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = Primary
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column {
+                                Text(
+                                    text = candidato.nombreCompleto,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    text = candidato.partidoPolitico,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = TextSecondary
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancelar")
+            }
+        }
+    )
 }
 
 @Composable
