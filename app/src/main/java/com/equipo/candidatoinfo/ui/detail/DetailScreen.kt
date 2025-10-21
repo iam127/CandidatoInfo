@@ -1,41 +1,40 @@
 package com.equipo.candidatoinfo.ui.detail
 
-import androidx.compose.foundation.Image
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.equipo.candidatoinfo.util.IntentUtils
+import androidx.compose.material.icons.filled.OpenInNew
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Gavel
+import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.Balance
+import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.equipo.candidatoinfo.data.CandidatoData
-import com.equipo.candidatoinfo.model.Candidato
-import com.equipo.candidatoinfo.model.Cargo
-import com.equipo.candidatoinfo.model.Denuncia
-import com.equipo.candidatoinfo.model.EstadoDenuncia
-import com.equipo.candidatoinfo.model.EstadoProyecto
-import com.equipo.candidatoinfo.model.Proyecto
-import com.equipo.candidatoinfo.ui.theme.*
-import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.Gavel
-import androidx.compose.material.icons.filled.AccountBalance
-import androidx.compose.material.icons.filled.CalendarToday
-
-
+import com.equipo.candidatoinfo.model.*
+import com.equipo.candidatoinfo.ui.theme.*
+import com.equipo.candidatoinfo.util.IntentUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +44,7 @@ fun DetailScreen(
     viewModel: DetailViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
 
     // Cargar candidato cuando cambia el ID
     LaunchedEffect(candidateId) {
@@ -130,11 +130,15 @@ fun DetailScreen(
                         }
                     }
 
-                    // Botón para ver fuente oficial
+                    // Botones de acción
                     item {
                         Spacer(modifier = Modifier.height(16.dp))
+
+                        // Botón Ver en JNE
                         Button(
-                            onClick = { /* TODO: Abrir URL */ },
+                            onClick = {
+                                IntentUtils.openUrl(context, candidato.fuenteOficial)
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp),
@@ -142,8 +146,42 @@ fun DetailScreen(
                                 containerColor = Primary
                             )
                         ) {
+                            Icon(
+                                imageVector = Icons.Default.OpenInNew,
+                                contentDescription = null,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
                             Text("Ver en JNE")
                         }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        // Botón Compartir
+                        OutlinedButton(
+                            onClick = {
+                                val shareText = IntentUtils.getCandidatoShareText(
+                                    nombre = candidato.nombreCompleto,
+                                    partido = candidato.partidoPolitico,
+                                    cargo = if (candidato.cargo == Cargo.CONGRESO) "Congreso" else "Presidencia",
+                                    denuncias = candidato.numeroDenuncias,
+                                    proyectos = candidato.numeroProyectos
+                                )
+                                IntentUtils.shareText(context, shareText)
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Share,
+                                contentDescription = null,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Compartir información")
+                        }
+
                         Spacer(modifier = Modifier.height(32.dp))
                     }
                 }
@@ -152,38 +190,37 @@ fun DetailScreen(
     }
 }
 
-
 @Composable
 fun CandidatoHeader(candidato: Candidato) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Primary.copy(alpha = 0.05f))
+            .background(Surface)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Foto grande
-        if (candidato.fotoUrl.isNotEmpty()) {
-            val drawableId = getDrawableId(candidato.fotoUrl)
-            if (drawableId != null) {
-                Image(
-                    painter = painterResource(id = drawableId),
-                    contentDescription = "Foto de ${candidato.nombreCompleto}",
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
+        // Foto del candidato (placeholder)
+        Surface(
+            modifier = Modifier
+                .size(120.dp)
+                .clip(CircleShape),
+            color = Primary.copy(alpha = 0.1f)
+        ) {
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = candidato.nombre.first().toString(),
+                    style = MaterialTheme.typography.displayLarge,
+                    color = Primary,
+                    fontWeight = FontWeight.Bold
                 )
-            } else {
-                // Fallback si no encuentra la imagen
-                AvatarFallback(candidato.nombre.first(), Modifier.size(120.dp))
             }
-        } else {
-            AvatarFallback(candidato.nombre.first(), Modifier.size(120.dp))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Nombre completo
         Text(
             text = candidato.nombreCompleto,
             style = MaterialTheme.typography.headlineMedium,
@@ -191,47 +228,50 @@ fun CandidatoHeader(candidato: Candidato) {
             color = TextPrimary
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
+        // Partido político
         Text(
             text = candidato.partidoPolitico,
             style = MaterialTheme.typography.titleMedium,
             color = TextSecondary
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
+        // Chips de información básica
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            // Edad
             AssistChip(
                 onClick = { },
-                label = {
-                    Text(
-                        text = if (candidato.cargo == Cargo.CONGRESO) "Congreso" else "Presidencia"
+                label = { Text("${candidato.edad} años") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
                     )
-                },
-                colors = AssistChipDefaults.assistChipColors(
-                    containerColor = Primary,
-                    labelColor = Color.White
-                )
+                }
             )
 
+            // Cargo
             AssistChip(
                 onClick = { },
                 label = {
-                    Text("${candidato.edad} años")
+                    Text(if (candidato.cargo == Cargo.CONGRESO) "Congreso" else "Presidencia")
                 },
                 colors = AssistChipDefaults.assistChipColors(
-                    containerColor = Surface,
-                    labelColor = TextPrimary
+                    containerColor = Primary.copy(alpha = 0.1f),
+                    labelColor = Primary
                 )
             )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
-// Indicadores de transparencia
+        // Indicadores de transparencia
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -244,7 +284,7 @@ fun CandidatoHeader(candidato: Candidato) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Warning,  // Agregar import
+                                imageVector = Icons.Default.Warning,
                                 contentDescription = null,
                                 modifier = Modifier.size(16.dp)
                             )
@@ -268,7 +308,7 @@ fun CandidatoHeader(candidato: Candidato) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Description,  // Agregar import
+                                imageVector = Icons.Default.Description,
                                 contentDescription = null,
                                 modifier = Modifier.size(16.dp)
                             )
@@ -283,8 +323,6 @@ fun CandidatoHeader(candidato: Candidato) {
                 )
             }
         }
-
-
     }
 }
 
@@ -313,6 +351,7 @@ fun InformacionPersonalCard(candidato: Candidato) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
+            // Biografía
             Text(
                 text = "Biografía",
                 style = MaterialTheme.typography.titleSmall,
@@ -325,6 +364,48 @@ fun InformacionPersonalCard(candidato: Candidato) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = TextSecondary
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Región
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.LocationOn,
+                    contentDescription = null,
+                    tint = Primary,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Región: ${candidato.region}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = TextPrimary
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Asistencia (si aplica)
+            if (candidato.asistencia != null) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = null,
+                        tint = Secondary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Asistencia: ${candidato.asistencia}%",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = TextPrimary
+                    )
+                }
+            }
         }
     }
 }
@@ -348,16 +429,16 @@ fun DenunciaCard(denuncia: Denuncia) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // ← AGREGAR ÍCONO
+                // Título con ícono
                 Row(
                     modifier = Modifier.weight(1f),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
                         imageVector = when (denuncia.tipo) {
-                            TipoDenuncia.PENAL -> Icons.Default.Gavel  // Agregar import
+                            TipoDenuncia.PENAL -> Icons.Default.Gavel
                             TipoDenuncia.ADMINISTRATIVA -> Icons.Default.AccountBalance
-                            TipoDenuncia.CIVIL -> Icons.Default.BalanceIcon  // o cualquier otro
+                            TipoDenuncia.CIVIL -> Icons.Default.Balance
                         },
                         contentDescription = null,
                         tint = Error,
@@ -372,6 +453,7 @@ fun DenunciaCard(denuncia: Denuncia) {
                     )
                 }
 
+                // Badge de estado
                 AssistChip(
                     onClick = { },
                     label = {
@@ -401,6 +483,7 @@ fun DenunciaCard(denuncia: Denuncia) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Descripción
             Text(
                 text = denuncia.descripcion,
                 style = MaterialTheme.typography.bodyMedium,
@@ -409,11 +492,12 @@ fun DenunciaCard(denuncia: Denuncia) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Fecha con ícono
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.CalendarToday,  // Agregar import
+                    imageVector = Icons.Default.CalendarToday,
                     contentDescription = null,
                     modifier = Modifier.size(16.dp),
                     tint = TextSecondary
@@ -428,7 +512,6 @@ fun DenunciaCard(denuncia: Denuncia) {
         }
     }
 }
-
 
 @Composable
 fun ProyectoCard(proyecto: Proyecto) {
@@ -449,6 +532,7 @@ fun ProyectoCard(proyecto: Proyecto) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // Título
                 Text(
                     text = proyecto.titulo,
                     style = MaterialTheme.typography.titleSmall,
@@ -457,6 +541,7 @@ fun ProyectoCard(proyecto: Proyecto) {
                     modifier = Modifier.weight(1f)
                 )
 
+                // Badge de estado
                 AssistChip(
                     onClick = { },
                     label = {
@@ -466,23 +551,22 @@ fun ProyectoCard(proyecto: Proyecto) {
                                 EstadoProyecto.EN_DEBATE -> "En debate"
                                 EstadoProyecto.APROBADO -> "Aprobado"
                                 EstadoProyecto.RECHAZADO -> "Rechazado"
-                                EstadoProyecto.ARCHIVADO -> "Archivado"
                             },
                             style = MaterialTheme.typography.labelSmall
                         )
                     },
                     colors = AssistChipDefaults.assistChipColors(
                         containerColor = when (proyecto.estado) {
+                            EstadoProyecto.PRESENTADO -> Color(0xFFE3F2FD)
+                            EstadoProyecto.EN_DEBATE -> Color(0xFFFFF3E0)
                             EstadoProyecto.APROBADO -> Secondary.copy(alpha = 0.1f)
-                            EstadoProyecto.EN_DEBATE -> Primary.copy(alpha = 0.1f)
                             EstadoProyecto.RECHAZADO -> Error.copy(alpha = 0.1f)
-                            else -> Surface
                         },
                         labelColor = when (proyecto.estado) {
+                            EstadoProyecto.PRESENTADO -> Primary
+                            EstadoProyecto.EN_DEBATE -> Color(0xFFFF6F00)
                             EstadoProyecto.APROBADO -> Secondary
-                            EstadoProyecto.EN_DEBATE -> Primary
                             EstadoProyecto.RECHAZADO -> Error
-                            else -> TextSecondary
                         }
                     )
                 )
@@ -490,6 +574,7 @@ fun ProyectoCard(proyecto: Proyecto) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Descripción
             Text(
                 text = proyecto.descripcion,
                 style = MaterialTheme.typography.bodyMedium,
@@ -498,58 +583,23 @@ fun ProyectoCard(proyecto: Proyecto) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Text(
-                text = proyecto.fecha,
-                style = MaterialTheme.typography.bodySmall,
-                color = TextSecondary
-            )
+            // Fecha
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.CalendarToday,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp),
+                    tint = TextSecondary
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = proyecto.fecha,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextSecondary
+                )
+            }
         }
-    }
-}
-
-@Composable
-private fun AvatarFallback(initial: Char, modifier: Modifier = Modifier) {
-    Surface(
-        modifier = modifier.clip(CircleShape),
-        color = getColorForInitial(initial)
-    ) {
-        Box(contentAlignment = Alignment.Center) {
-            Text(
-                text = initial.toString(),
-                style = MaterialTheme.typography.displayLarge,
-                color = Color.White,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    }
-}
-
-@Composable
-private fun getColorForInitial(initial: Char): Color {
-    return when (initial.uppercaseChar()) {
-        'K' -> Color(0xFF9C27B0) // Morado
-        'V' -> Color(0xFF4CAF50) // Verde
-        'R' -> Color(0xFFFF5722) // Naranja
-        'H' -> Color(0xFF2196F3) // Azul
-        'C' -> Color(0xFFFF9800) // Amarillo
-        'Y' -> Color(0xFF795548) // Café
-        'G' -> Color(0xFF00BCD4) // Cyan
-        'A' -> Color(0xFF607D8B) // Gris
-        'P' -> Color(0xFFE91E63) // Rosa
-        else -> Primary
-    }
-}
-
-@Composable
-private fun getDrawableId(imageName: String): Int? {
-    val context = LocalContext.current
-    return try {
-        context.resources.getIdentifier(
-            imageName,
-            "drawable",
-            context.packageName
-        ).takeIf { it != 0 }
-    } catch (e: Exception) {
-        null
     }
 }
