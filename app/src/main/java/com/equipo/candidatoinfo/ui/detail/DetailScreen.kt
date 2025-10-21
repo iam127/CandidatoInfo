@@ -29,6 +29,12 @@ import com.equipo.candidatoinfo.model.Proyecto
 import com.equipo.candidatoinfo.ui.theme.*
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Gavel
+import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.CalendarToday
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -222,6 +228,63 @@ fun CandidatoHeader(candidato: Candidato) {
                 )
             )
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+// Indicadores de transparencia
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            // Badge de denuncias
+            if (candidato.numeroDenuncias > 0) {
+                AssistChip(
+                    onClick = { },
+                    label = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Warning,  // Agregar import
+                                contentDescription = null,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("${candidato.numeroDenuncias} denuncia${if (candidato.numeroDenuncias > 1) "s" else ""}")
+                        }
+                    },
+                    colors = AssistChipDefaults.assistChipColors(
+                        containerColor = Error.copy(alpha = 0.1f),
+                        labelColor = Error
+                    )
+                )
+            }
+
+            // Badge de proyectos
+            if (candidato.numeroProyectos > 0) {
+                AssistChip(
+                    onClick = { },
+                    label = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Description,  // Agregar import
+                                contentDescription = null,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("${candidato.numeroProyectos} proyecto${if (candidato.numeroProyectos > 1) "s" else ""}")
+                        }
+                    },
+                    colors = AssistChipDefaults.assistChipColors(
+                        containerColor = Secondary.copy(alpha = 0.1f),
+                        labelColor = Secondary
+                    )
+                )
+            }
+        }
+
+
     }
 }
 
@@ -285,13 +348,29 @@ fun DenunciaCard(denuncia: Denuncia) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = denuncia.titulo,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = TextPrimary,
-                    modifier = Modifier.weight(1f)
-                )
+                // ← AGREGAR ÍCONO
+                Row(
+                    modifier = Modifier.weight(1f),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = when (denuncia.tipo) {
+                            TipoDenuncia.PENAL -> Icons.Default.Gavel  // Agregar import
+                            TipoDenuncia.ADMINISTRATIVA -> Icons.Default.AccountBalance
+                            TipoDenuncia.CIVIL -> Icons.Default.BalanceIcon  // o cualquier otro
+                        },
+                        contentDescription = null,
+                        tint = Error,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = denuncia.titulo,
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                }
 
                 AssistChip(
                     onClick = { },
@@ -330,14 +409,26 @@ fun DenunciaCard(denuncia: Denuncia) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Text(
-                text = denuncia.fecha,
-                style = MaterialTheme.typography.bodySmall,
-                color = TextSecondary
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.CalendarToday,  // Agregar import
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp),
+                    tint = TextSecondary
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = denuncia.fecha,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextSecondary
+                )
+            }
         }
     }
 }
+
 
 @Composable
 fun ProyectoCard(proyecto: Proyecto) {
