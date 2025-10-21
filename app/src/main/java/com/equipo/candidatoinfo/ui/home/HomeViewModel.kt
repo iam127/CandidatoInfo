@@ -16,13 +16,21 @@ data class HomeUiState(
     val searchQuery: String = "",
     val isLoading: Boolean = true,
     val error: String? = null,
-    val selectedFilter: FilterOption = FilterOption.TODOS
+    val selectedFilter: FilterOption = FilterOption.TODOS,
+    val sortOption: SortOption = SortOption.NOMBRE
 )
 
 enum class FilterOption {
     TODOS,
     CONGRESO,
     PRESIDENCIA
+}
+
+enum class SortOption {
+    NOMBRE,
+    DENUNCIAS_ASC,
+    DENUNCIAS_DESC,
+    PROYECTOS_DESC
 }
 
 class HomeViewModel : ViewModel() {
@@ -66,12 +74,18 @@ class HomeViewModel : ViewModel() {
         filterCandidatos()
     }
 
+    fun onSortChange(sort: SortOption) {
+        _uiState.value = _uiState.value.copy(sortOption = sort)
+        filterCandidatos()
+    }
+
     private fun filterCandidatos() {
         val query = _uiState.value.searchQuery
         val filter = _uiState.value.selectedFilter
+        val sortOption = _uiState.value.sortOption
         val allCandidatos = _uiState.value.candidatos
 
-        val filtered = allCandidatos.filter { candidato ->
+        var filtered = allCandidatos.filter { candidato ->
             // Filtro por búsqueda
             val matchesSearch = if (query.isEmpty()) {
                 true
@@ -89,6 +103,14 @@ class HomeViewModel : ViewModel() {
             }
 
             matchesSearch && matchesFilter
+        }
+
+        // Ordenamiento
+        filtered = when (sortOption) {
+            SortOption.NOMBRE -> filtered.sortedBy { it.nombreCompleto }
+            SortOption.DENUNCIAS_ASC -> filtered.sortedBy { it.numeroDenuncias }
+            SortOption.DENUNCIAS_DESC -> filtered.sortedByDescending { it.numeroDenuncias }
+            SortOption.PROYECTOS_DESC -> filtered.sortedByDescending { it.numeroProyectos }
         }
 
         _uiState.value = _uiState.value.copy(filteredCandidatos = filtered)
