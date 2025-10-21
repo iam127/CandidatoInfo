@@ -43,8 +43,12 @@ fun AppNavigation() {
 
         composable(Screen.Compare.route) {
             CompareScreen(
-                onNavigateBack = { navController.popBackStack() }
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToDetail = { id ->
+                    navController.navigate(Screen.Detail.createRoute(id))
+                }
             )
         }
+
     }
 }
