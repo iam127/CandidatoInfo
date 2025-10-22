@@ -97,7 +97,7 @@ app/src/main/java/com/equipo/candidatoinfo/
 
 Se generó documentación técnica completa:
 - Actualización de `FUENTES_DATOS.md` con arquitectura MVVM
-- Creación de `README.md` con guías de uso y buenas prácticas
+- Creación de `README.md` documentacion
 
 ---
 

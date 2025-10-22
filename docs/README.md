@@ -1,4 +1,6 @@
-markdown# CandidatoInfo - Transparencia Electoral Perú 2026
+
+##                   - Transparencia Electoral Perú 2026
+
 
 
 
@@ -18,11 +20,11 @@ markdown# CandidatoInfo - Transparencia Electoral Perú 2026
 
 ## 👥 Equipo de Desarrollo
 
-| Rol | Nombre | Responsabilidades |
-|-----|--------|-------------------|
-| 🎯 Líder Técnico | Matías Galván Guerrero | Arquitectura MVVM, ViewModels, Navegación, Repository, Intents |
-| 🎨 Diseñador UI/UX | Luis Enrique Galván Montoya | Diseño Figma, Pantallas Compose, Animaciones, Componentes UI |
-| 📝 Documentador | Wilson López | Modelos de datos, Datos verificados, Documentación, Testing |
+| Rol                   |             Nombre           |        Responsabilidades                                      |
+|----- -----------------|------------------------------|---------------------------------------------------------------|
+| 🎯 Líder Técnico      | Matías Galván Guerrero      | Arquitectura MVVM, ViewModels, Navegación, Repository, Intents |
+| 🎨 Diseñador UI/UX    | Luis Enrique Galván Montoya | Diseño Figma, Pantallas Compose, Animaciones, Componentes UI   |
+| 📝 Documentador       | Wilson López                | Modelos de datos, Datos verificados, Documentación, Testing    |
 
 **Docente:** Juan León S.  
 **Curso:** Aplicaciones Móviles con Android  
@@ -162,18 +164,18 @@ app/src/main/java/com/equipo/candidatoinfo/
 
 ## 📊 Candidatos Incluidos (Elecciones 2026)
 
-| # | Nombre | Partido | Denuncias | Proyectos |
-|---|--------|---------|-----------|-----------|
-| 1 | Rafael López Aliaga | Renovación Popular | 1 | 2 |
-| 2 | Keiko Fujimori | Fuerza Popular | 2 | 1 |
-| 3 | Julio Guzmán | Partido Morado | 0 | 2 |
-| 4 | Verónika Mendoza | Nuevo Perú | 0 | 3 |
-| 5 | Daniel Urresti | Podemos Perú | 1 | 1 |
-| 6 | George Forsyth | Somos Perú | 0 | 2 |
-| 7 | Hernando de Soto | Avanza País | 0 | 2 |
-| 8 | César Acuña | APP | 1 | 2 |
-| 9 | Antauro Humala | A.N.T.A.U.R.O | 1 | 2 |
-| 10 | Yonhy Lescano | Acción Popular | 0 | 2 |
+| # |         Nombre      | Partido             | Denuncias | Proyectos |
+|---|---------------------|---------------------|-----------|-----------|
+| 1 | Rafael López Aliaga | Renovación Popular  | 1          | 2 |
+| 2 | Keiko Fujimori      | Fuerza Popular      | 2 | 1 |
+| 3 | Julio Guzmán        | Partido Morado      | 0 | 2 |
+| 4 | Verónika Mendoza    | Nuevo Perú          | 0 | 3 |
+| 5 | Daniel Urresti      | Podemos Perú         | 1 | 1 |
+| 6 | George Forsyth      | Somos Perú          | 0 | 2 |
+| 7 | Hernando de Soto    | Avanza País          | 0 | 2 |
+| 8 | César Acuña         | APP                  | 1 | 2 |
+| 9 | Antauro Humala      | A.N.T.A.U.R.O       | 1 | 2 |
+| 10 | Yonhy Lescano      | Acción Popular      | 0 | 2 |
 
 **Total:** 10 candidatos | 6 denuncias | 19 propuestas
 
