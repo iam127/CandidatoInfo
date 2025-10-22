@@ -17,59 +17,62 @@
 - Footer con versión
 
 <p align="center">
-  <img src="./main_screen1.png" alt="Main Screen 1" width="45%"/>
-  <img src="./main_screen2.png" alt="Main Screen 2" width="45%"/>
+  <img src="./design/screenshots/main_screen1.png" alt="Main Screen 1" width="45%"/>
+  <img src="./design/screenshots/main_screen2.png" alt="Main Screen 2" width="45%"/>
 </p>
 
+---
 
 ### 2. HomeScreen (Lista de Candidatos)
 - Barra de búsqueda
 - Chips de filtros (Todos/Congreso/Presidencia)
 - Botón de ordenamiento
 - Lista de candidatos con:
-    - Foto circular
-    - Nombre y partido
-    - Badges de cargo y denuncias
+  - Foto circular
+  - Nombre y partido
+  - Badges de cargo y denuncias
 - FAB verde para comparar
 - Contador de resultados
 
 <p align="center">
-  <img src="./home_screen1.png" alt="Home Screen 1" width="45%"/>
-  <img src="./home_screen2.png" alt="Home Screen 2" width="45%"/>
+  <img src="./design/screenshots/home_screen1.png" alt="Home Screen 1" width="45%"/>
+  <img src="./design/screenshots/home_screen2.png" alt="Home Screen 2" width="45%"/>
 </p>
 
+---
 
 ### 3. DetailScreen (Perfil del Candidato)
 - Header con:
-    - Foto grande circular
-    - Nombre completo
-    - Partido político
-    - Chips de edad, cargo, denuncias, proyectos
+  - Foto grande circular
+  - Nombre completo
+  - Partido político
+  - Chips de edad, cargo, denuncias, proyectos
 - Sección Información Personal
 - Sección Denuncias (si aplica)
 - Sección Proyectos (si aplica)
 - Botones de acción (Ver en JNE, Compartir)
 
 <p align="center">
-  <img src="./detail_screen1.png" alt="Detail Screen 1" width="45%"/>
-  <img src="./detail_screen2.png" alt="Detail Screen 2" width="45%"/>
+  <img src="./design/screenshots/detail_screen1.png" alt="Detail Screen 1" width="45%"/>
+  <img src="./design/screenshots/detail_screen2.png" alt="Detail Screen 2" width="45%"/>
 </p>
 
+---
 
 ### 4. CompareScreen (Comparador)
 - 2 columnas lado a lado
 - Fotos circulares arriba
 - Nombres y partidos
 - Comparación visual de:
-    - Denuncias (con colores verde/rojo)
-    - Proyectos
-    - Edad
-    - Asistencia
+  - Denuncias (con colores verde/rojo)
+  - Proyectos
+  - Edad
+  - Asistencia
 - Selector de candidatos clickeable
 
 <p align="center">
-  <img src="./compare_screen1.png" alt="Compare Screen 1" width="45%"/>
-  <img src="./compare_screen2.png" alt="Compare Screen 2" width="45%"/>
+  <img src="./design/screenshots/compare_screen1.png" alt="Compare Screen 1" width="45%"/>
+  <img src="./design/screenshots/compare_screen2.png" alt="Compare Screen 2" width="45%"/>
 </p>
 
 
