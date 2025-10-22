@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.equipo.candidatoinfo.ui.detail
 
 import androidx.compose.foundation.background
@@ -15,13 +17,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.equipo.candidatoinfo.model.*
 import com.equipo.candidatoinfo.ui.theme.*
 import com.equipo.candidatoinfo.util.IntentUtils
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun DetailScreen(
     candidateId: String = "",
@@ -78,91 +81,104 @@ fun DetailScreen(
             }
             uiState.candidato != null -> {
                 val candidato = uiState.candidato!!
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
-                ) {
-                    item {
-                        CandidatoHeader(candidato)
-                    }
-
-                    item {
-                        SectionTitle("Información Personal")
-                        InformacionPersonalCard(candidato)
-                    }
-
-                    if (candidato.denuncias.isNotEmpty()) {
-                        item {
-                            SectionTitle("Denuncias y Antecedentes")
-                        }
-                        items(candidato.denuncias) { denuncia ->
-                            DenunciaCard(denuncia)
-                        }
-                    }
-
-                    if (candidato.proyectos.isNotEmpty()) {
-                        item {
-                            SectionTitle("Proyectos Presentados")
-                        }
-                        items(candidato.proyectos) { proyecto ->
-                            ProyectoCard(proyecto)
-                        }
-                    }
-
-                    item {
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Button(
-                            onClick = {
-                                IntentUtils.openUrl(context, candidato.fuenteOficial)
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Primary
-                            )
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Info,
-                                contentDescription = null,
-                                modifier = Modifier.size(20.dp)
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text("Ver en JNE")
-                        }
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        OutlinedButton(
-                            onClick = {
-                                val shareText = IntentUtils.getCandidatoShareText(
-                                    nombre = candidato.nombreCompleto,
-                                    partido = candidato.partidoPolitico,
-                                    cargo = if (candidato.cargo == Cargo.CONGRESO) "Congreso" else "Presidencia",
-                                    denuncias = candidato.numeroDenuncias,
-                                    proyectos = candidato.numeroProyectos
-                                )
-                                IntentUtils.shareText(context, shareText)
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Share,
-                                contentDescription = null,
-                                modifier = Modifier.size(20.dp)
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text("Compartir información")
-                        }
-
-                        Spacer(modifier = Modifier.height(32.dp))
-                    }
-                }
+                DetailScreenContent(
+                    candidato = candidato,
+                    paddingValues = paddingValues,
+                    context = context
+                )
             }
+        }
+    }
+}
+
+@Composable
+fun DetailScreenContent(
+    candidato: Candidato,
+    paddingValues: PaddingValues = PaddingValues(0.dp),
+    context: android.content.Context = LocalContext.current
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+    ) {
+        item {
+            CandidatoHeader(candidato)
+        }
+
+        item {
+            SectionTitle("Información Personal")
+            InformacionPersonalCard(candidato)
+        }
+
+        if (candidato.denuncias.isNotEmpty()) {
+            item {
+                SectionTitle("Denuncias y Antecedentes")
+            }
+            items(candidato.denuncias) { denuncia ->
+                DenunciaCard(denuncia)
+            }
+        }
+
+        if (candidato.proyectos.isNotEmpty()) {
+            item {
+                SectionTitle("Proyectos Presentados")
+            }
+            items(candidato.proyectos) { proyecto ->
+                ProyectoCard(proyecto)
+            }
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+                    IntentUtils.openUrl(context, candidato.fuenteOficial)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Primary
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Ver en JNE")
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedButton(
+                onClick = {
+                    val shareText = IntentUtils.getCandidatoShareText(
+                        nombre = candidato.nombreCompleto,
+                        partido = candidato.partidoPolitico,
+                        cargo = if (candidato.cargo == Cargo.CONGRESO) "Congreso" else "Presidencia",
+                        denuncias = candidato.numeroDenuncias,
+                        proyectos = candidato.numeroProyectos
+                    )
+                    IntentUtils.shareText(context, shareText)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Share,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Compartir información")
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
@@ -351,9 +367,8 @@ fun InformacionPersonalCard(candidato: Candidato) {
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
-
             if (candidato.asistencia != null) {
+                Spacer(modifier = Modifier.height(8.dp))
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -412,7 +427,6 @@ fun DenunciaCard(denuncia: Denuncia) {
                         color = TextPrimary
                     )
                 }
-
                 AssistChip(
                     onClick = { },
                     label = {
@@ -421,6 +435,7 @@ fun DenunciaCard(denuncia: Denuncia) {
                                 EstadoDenuncia.EN_PROCESO -> "En proceso"
                                 EstadoDenuncia.ARCHIVADO -> "Archivado"
                                 EstadoDenuncia.SENTENCIADO -> "Sentenciado"
+                                else -> "Desconocido"
                             },
                             style = MaterialTheme.typography.labelSmall
                         )
@@ -430,11 +445,13 @@ fun DenunciaCard(denuncia: Denuncia) {
                             EstadoDenuncia.EN_PROCESO -> Color(0xFFFFF3E0)
                             EstadoDenuncia.ARCHIVADO -> Surface
                             EstadoDenuncia.SENTENCIADO -> Error.copy(alpha = 0.1f)
+                            else -> Surface
                         },
                         labelColor = when (denuncia.estado) {
                             EstadoDenuncia.EN_PROCESO -> Color(0xFFFF6F00)
                             EstadoDenuncia.ARCHIVADO -> TextSecondary
                             EstadoDenuncia.SENTENCIADO -> Error
+                            else -> TextSecondary
                         }
                     )
                 )
@@ -469,6 +486,7 @@ fun DenunciaCard(denuncia: Denuncia) {
         }
     }
 }
+
 @Composable
 fun ProyectoCard(proyecto: Proyecto) {
     Card(
@@ -495,7 +513,6 @@ fun ProyectoCard(proyecto: Proyecto) {
                     color = TextPrimary,
                     modifier = Modifier.weight(1f)
                 )
-
                 AssistChip(
                     onClick = { },
                     label = {
@@ -505,7 +522,7 @@ fun ProyectoCard(proyecto: Proyecto) {
                                 EstadoProyecto.EN_DEBATE -> "En debate"
                                 EstadoProyecto.APROBADO -> "Aprobado"
                                 EstadoProyecto.RECHAZADO -> "Rechazado"
-                                else -> "Desconocido"  // ✅ AGREGAR ESTO
+                                else -> "Desconocido"
                             },
                             style = MaterialTheme.typography.labelSmall
                         )
@@ -516,14 +533,14 @@ fun ProyectoCard(proyecto: Proyecto) {
                             EstadoProyecto.EN_DEBATE -> Color(0xFFFFF3E0)
                             EstadoProyecto.APROBADO -> Secondary.copy(alpha = 0.1f)
                             EstadoProyecto.RECHAZADO -> Error.copy(alpha = 0.1f)
-                            else -> Surface  // ✅ AGREGAR ESTO
+                            else -> Surface
                         },
                         labelColor = when (proyecto.estado) {
                             EstadoProyecto.PRESENTADO -> Primary
                             EstadoProyecto.EN_DEBATE -> Color(0xFFFF6F00)
                             EstadoProyecto.APROBADO -> Secondary
                             EstadoProyecto.RECHAZADO -> Error
-                            else -> TextSecondary  // ✅ AGREGAR ESTO
+                            else -> TextSecondary
                         }
                     )
                 )
@@ -556,5 +573,120 @@ fun ProyectoCard(proyecto: Proyecto) {
                 )
             }
         }
+    }
+}
+
+// ✅ ============ PREVIEWS ============ ✅
+@Preview(showBackground = true, name = "Perfil Completo - Keiko Fujimori")
+@Composable
+fun PreviewDetailScreenComplete() {
+    CandidatoInfoTheme {
+        val candidato = Candidato(
+            id = "candidato_1",
+            nombre = "Keiko",
+            apellido = "Fujimori",
+            edad = 48,
+            partidoPolitico = "Fuerza Popular",
+            cargo = Cargo.CONGRESO,
+            region = "Lima",
+            biografia = "Política peruana, hija del expresidente Alberto Fujimori. Lideró Fuerza Popular y ha sido candidata presidencial en tres ocasiones.",
+            denuncias = listOf(
+                Denuncia(
+                    titulo = "Caso Odebrecht",
+                    descripcion = "Investigación por presunto lavado de activos relacionado con aportes de Odebrecht a su campaña electoral.",
+                    fecha = "2018",
+                    tipo = TipoDenuncia.PENAL,
+                    estado = EstadoDenuncia.EN_PROCESO
+                ),
+                Denuncia(
+                    titulo = "Obstrucción a la justicia",
+                    descripcion = "Acusación por presunta obstrucción a la justicia en el marco del caso Odebrecht.",
+                    fecha = "2020",
+                    tipo = TipoDenuncia.PENAL,
+                    estado = EstadoDenuncia.EN_PROCESO
+                )
+            ),
+            proyectos = emptyList(),
+            asistencia = 85
+        )
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("Perfil") },
+                    navigationIcon = {
+                        IconButton(onClick = {}) {
+                            Icon(Icons.Default.ArrowBack, "Volver")
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Primary,
+                        titleContentColor = Color.White,
+                        navigationIconContentColor = Color.White
+                    )
+                )
+            }
+        ) { padding ->
+            DetailScreenContent(candidato = candidato, paddingValues = padding)
+        }
+    }
+}
+
+@Preview(showBackground = true, name = "Header del Candidato")
+@Composable
+fun PreviewCandidatoHeader() {
+    CandidatoInfoTheme {
+        CandidatoHeader(
+            candidato = Candidato(
+                id = "1",
+                nombre = "Verónika",
+                apellido = "Mendoza",
+                edad = 43,
+                partidoPolitico = "Juntos por el Perú",
+                cargo = Cargo.CONGRESO,
+                region = "Cusco",
+                biografia = "Psicóloga y política peruana.",
+                denuncias = emptyList(),
+                proyectos = listOf(
+                    Proyecto(
+                        titulo = "Ley de Consulta Previa",
+                        descripcion = "Proyecto para fortalecer el derecho de consulta previa.",
+                        fecha = "2019",
+                        estado = EstadoProyecto.PRESENTADO
+                    )
+                ),
+                asistencia = 92
+            )
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Card de Denuncia")
+@Composable
+fun PreviewDenunciaCard() {
+    CandidatoInfoTheme {
+        DenunciaCard(
+            denuncia = Denuncia(
+                titulo = "Caso Odebrecht",
+                descripcion = "Investigación por presunto lavado de activos relacionado con aportes de Odebrecht a su campaña electoral.",
+                fecha = "2018",
+                tipo = TipoDenuncia.PENAL,
+                estado = EstadoDenuncia.EN_PROCESO
+            )
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Card de Proyecto")
+@Composable
+fun PreviewProyectoCard() {
+    CandidatoInfoTheme {
+        ProyectoCard(
+            proyecto = Proyecto(
+                titulo = "Ley de Protección Animal",
+                descripcion = "Iniciativa para proteger los derechos de los animales en el país.",
+                fecha = "2020",
+                estado = EstadoProyecto.APROBADO
+            )
+        )
     }
 }

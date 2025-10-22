@@ -8,9 +8,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.equipo.candidatoinfo.navigation.AppNavigation
-import com.equipo.candidatoinfo.ui.compare.CompareScreen
-import com.equipo.candidatoinfo.ui.detail.DetailScreen
 import com.equipo.candidatoinfo.ui.theme.CandidatoInfoTheme
+import com.equipo.candidatoinfo.model.*
+import com.equipo.candidatoinfo.ui.detail.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "App Completa")
 @Composable
 fun PreviewApp() {
     CandidatoInfoTheme {
@@ -38,25 +38,29 @@ fun PreviewApp() {
     }
 }
 
-@Preview(showBackground = true, name = "Alberto Fujimori")
+@Preview(showBackground = true, name = "Detalle - Keiko Fujimori")
 @Composable
-fun PreviewDetailScreen8() {
-    CandidatoInfoTheme {
-        DetailScreen(
-            candidateId = "candidato_8",
-            onNavigateBack = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewCompareScreen() {
+fun PreviewDetailScreen() {
     CandidatoInfoTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
-            CompareScreen(
-                onNavigateBack = {} // Función vacía para el preview
+            DetailScreen(
+                candidateId = "candidato_1",  // ✅ ID CORRECTO
+                onNavigateBack = {}
             )
         }
     }
 }
+
+@Preview(showBackground = true, name = "Detalle - Verónika Mendoza")
+@Composable
+fun PreviewDetailScreen2() {
+    CandidatoInfoTheme {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            DetailScreen(
+                candidateId = "candidato_2",  // ✅ Otro candidato
+                onNavigateBack = {}
+            )
+        }
+    }
+}
+
