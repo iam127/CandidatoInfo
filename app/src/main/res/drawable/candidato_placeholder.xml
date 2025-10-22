@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Círculo de fondo gris -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M60,60m-60,0a60,60 0,1 1,120 0a60,60 0,1 1,-120 0"/>
+
+    <!-- Icono de persona blanco -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,30c8.28,0 15,6.72 15,15s-6.72,15 -15,15s-15,-6.72 -15,-15S51.72,30 60,30zM60,90c-16.54,0 -30,-8.06 -30,-18c0,-9.94 13.46,-18 30,-18s30,8.06 30,18C90,81.94 76.54,90 60,90z"/>
+</vector>

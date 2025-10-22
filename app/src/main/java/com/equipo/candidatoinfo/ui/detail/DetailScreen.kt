@@ -2,6 +2,7 @@
 
 package com.equipo.candidatoinfo.ui.detail
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,7 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,7 +26,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.equipo.candidatoinfo.model.*
 import com.equipo.candidatoinfo.ui.theme.*
 import com.equipo.candidatoinfo.util.IntentUtils
-
 
 @Composable
 fun DetailScreen(
@@ -192,23 +194,14 @@ fun CandidatoHeader(candidato: Candidato) {
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Surface(
+        Image(
+            painter = painterResource(id = candidato.fotoResId),
+            contentDescription = "Foto de ${candidato.nombreCompleto}",
             modifier = Modifier
                 .size(120.dp)
                 .clip(CircleShape),
-            color = Primary.copy(alpha = 0.1f)
-        ) {
-            Box(
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = candidato.nombre.first().toString(),
-                    style = MaterialTheme.typography.displayLarge,
-                    color = Primary,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
+            contentScale = ContentScale.Crop
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -389,7 +382,6 @@ fun InformacionPersonalCard(candidato: Candidato) {
         }
     }
 }
-
 @Composable
 fun DenunciaCard(denuncia: Denuncia) {
     Card(
@@ -435,7 +427,6 @@ fun DenunciaCard(denuncia: Denuncia) {
                                 EstadoDenuncia.EN_PROCESO -> "En proceso"
                                 EstadoDenuncia.ARCHIVADO -> "Archivado"
                                 EstadoDenuncia.SENTENCIADO -> "Sentenciado"
-                                else -> "Desconocido"
                             },
                             style = MaterialTheme.typography.labelSmall
                         )
@@ -445,13 +436,11 @@ fun DenunciaCard(denuncia: Denuncia) {
                             EstadoDenuncia.EN_PROCESO -> Color(0xFFFFF3E0)
                             EstadoDenuncia.ARCHIVADO -> Surface
                             EstadoDenuncia.SENTENCIADO -> Error.copy(alpha = 0.1f)
-                            else -> Surface
                         },
                         labelColor = when (denuncia.estado) {
                             EstadoDenuncia.EN_PROCESO -> Color(0xFFFF6F00)
                             EstadoDenuncia.ARCHIVADO -> TextSecondary
                             EstadoDenuncia.SENTENCIADO -> Error
-                            else -> TextSecondary
                         }
                     )
                 )
@@ -486,7 +475,6 @@ fun DenunciaCard(denuncia: Denuncia) {
         }
     }
 }
-
 @Composable
 fun ProyectoCard(proyecto: Proyecto) {
     Card(
@@ -522,7 +510,7 @@ fun ProyectoCard(proyecto: Proyecto) {
                                 EstadoProyecto.EN_DEBATE -> "En debate"
                                 EstadoProyecto.APROBADO -> "Aprobado"
                                 EstadoProyecto.RECHAZADO -> "Rechazado"
-                                else -> "Desconocido"
+                                EstadoProyecto.ARCHIVADO -> "Archivado"
                             },
                             style = MaterialTheme.typography.labelSmall
                         )
@@ -533,14 +521,14 @@ fun ProyectoCard(proyecto: Proyecto) {
                             EstadoProyecto.EN_DEBATE -> Color(0xFFFFF3E0)
                             EstadoProyecto.APROBADO -> Secondary.copy(alpha = 0.1f)
                             EstadoProyecto.RECHAZADO -> Error.copy(alpha = 0.1f)
-                            else -> Surface
+                            EstadoProyecto.ARCHIVADO -> Surface
                         },
                         labelColor = when (proyecto.estado) {
                             EstadoProyecto.PRESENTADO -> Primary
                             EstadoProyecto.EN_DEBATE -> Color(0xFFFF6F00)
                             EstadoProyecto.APROBADO -> Secondary
                             EstadoProyecto.RECHAZADO -> Error
-                            else -> TextSecondary
+                            EstadoProyecto.ARCHIVADO -> TextSecondary
                         }
                     )
                 )
@@ -575,7 +563,6 @@ fun ProyectoCard(proyecto: Proyecto) {
         }
     }
 }
-
 // ✅ ============ PREVIEWS ============ ✅
 @Preview(showBackground = true, name = "Perfil Completo - Keiko Fujimori")
 @Composable
@@ -630,7 +617,6 @@ fun PreviewDetailScreenComplete() {
         }
     }
 }
-
 @Preview(showBackground = true, name = "Header del Candidato")
 @Composable
 fun PreviewCandidatoHeader() {
@@ -659,7 +645,6 @@ fun PreviewCandidatoHeader() {
         )
     }
 }
-
 @Preview(showBackground = true, name = "Card de Denuncia")
 @Composable
 fun PreviewDenunciaCard() {
@@ -675,7 +660,6 @@ fun PreviewDenunciaCard() {
         )
     }
 }
-
 @Preview(showBackground = true, name = "Card de Proyecto")
 @Composable
 fun PreviewProyectoCard() {

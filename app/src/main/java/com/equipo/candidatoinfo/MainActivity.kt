@@ -28,39 +28,5 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true, name = "App Completa")
-@Composable
-fun PreviewApp() {
-    CandidatoInfoTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            AppNavigation()
-        }
-    }
-}
 
-@Preview(showBackground = true, name = "Detalle - Keiko Fujimori")
-@Composable
-fun PreviewDetailScreen() {
-    CandidatoInfoTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            DetailScreen(
-                candidateId = "candidato_1",  // ✅ ID CORRECTO
-                onNavigateBack = {}
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, name = "Detalle - Verónika Mendoza")
-@Composable
-fun PreviewDetailScreen2() {
-    CandidatoInfoTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            DetailScreen(
-                candidateId = "candidato_2",  // ✅ Otro candidato
-                onNavigateBack = {}
-            )
-        }
-    }
-}
 

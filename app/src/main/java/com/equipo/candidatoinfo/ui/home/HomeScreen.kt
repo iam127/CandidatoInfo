@@ -3,6 +3,7 @@ package com.equipo.candidatoinfo.ui.home
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -294,22 +297,14 @@ fun CandidatoCard(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Surface(
+            Image(
+                painter = painterResource(id = candidato.fotoResId),
+                contentDescription = "Foto de ${candidato.nombreCompleto}",
                 modifier = Modifier
                     .size(60.dp)
                     .clip(CircleShape),
-                color = Surface
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = candidato.nombre.first().toString(),
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = Primary
-                    )
-                }
-            }
+                contentScale = ContentScale.Crop
+            )
 
             Spacer(modifier = Modifier.width(16.dp))
 

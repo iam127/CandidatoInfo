@@ -1,5 +1,6 @@
 package com.equipo.candidatoinfo.data
 
+import com.equipo.candidatoinfo.R
 import com.equipo.candidatoinfo.model.*
 
 object CandidatoData {
@@ -16,6 +17,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Lima",
                 biografia = "Empresario peruano y actual alcalde de Lima. Candidato presidencial en 2021 y probable candidato para 2026. Conocido por su postura conservadora y católica, y por sus proyectos de infraestructura en Lima.",
+                fotoResId = R.drawable.candidato_rafael_lopez,
                 denuncias = listOf(
                     Denuncia(
                         titulo = "Conflictos de interés",
@@ -53,6 +55,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Lima",
                 biografia = "Lideresa de Fuerza Popular y candidata presidencial en 2011, 2016 y 2021. Hija del expresidente Alberto Fujimori. Se perfila como posible candidata para las elecciones 2026.",
+                fotoResId = R.drawable.candidato_keiko_fujimori,
                 denuncias = listOf(
                     Denuncia(
                         titulo = "Caso Odebrecht",
@@ -91,6 +94,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Lima",
                 biografia = "Economista y político peruano. Fundador del Partido Morado. Candidato presidencial en 2016 y 2021. Propone un modelo de centro progresista con énfasis en educación y tecnología.",
+                fotoResId = R.drawable.candidato_julio_guzman,
                 denuncias = emptyList(),
                 proyectos = listOf(
                     Proyecto(
@@ -120,6 +124,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Cusco",
                 biografia = "Psicóloga y política de izquierda. Candidata presidencial en 2016 y 2021. Defensora de los derechos humanos, el medio ambiente y los pueblos indígenas. Probable candidata para 2026.",
+                fotoResId = R.drawable.candidato_veronika_mendoza,
                 denuncias = emptyList(),
                 proyectos = listOf(
                     Proyecto(
@@ -155,6 +160,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Lima",
                 biografia = "General en retiro y político peruano. Congresista actual y posible candidato presidencial 2026. Conocido por su postura de mano dura en seguridad ciudadana. Fue ministro del Interior.",
+                fotoResId = R.drawable.candidato_daniel_urresti,
                 denuncias = listOf(
                     Denuncia(
                         titulo = "Caso Hugo Bustíos",
@@ -186,6 +192,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Lima",
                 biografia = "Exfutbolista profesional y político. Fue alcalde de La Victoria y candidato presidencial en 2021. Se perfila nuevamente para las elecciones 2026 con un discurso centrado en seguridad y juventud.",
+                fotoResId = R.drawable.candidato_george_forsyth,
                 denuncias = emptyList(),
                 proyectos = listOf(
                     Proyecto(
@@ -215,6 +222,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Lima",
                 biografia = "Economista de renombre internacional. Autor de 'El Misterio del Capital'. Candidato presidencial en 2021. Su candidatura para 2026 depende de su estado de salud y decisión partidaria.",
+                fotoResId = R.drawable.candidato_hernando_desoto,
                 denuncias = emptyList(),
                 proyectos = listOf(
                     Proyecto(
@@ -244,6 +252,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "La Libertad",
                 biografia = "Empresario educativo y político. Fundador de la Universidad César Vallejo y del partido APP. Candidato presidencial en 2016 y 2021. Posible candidato para 2026.",
+                fotoResId = R.drawable.candidato_cesar_acuna,
                 denuncias = listOf(
                     Denuncia(
                         titulo = "Plagio académico",
@@ -281,6 +290,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Lima",
                 biografia = "Militar retirado y político etnocacerista. Liberado de prisión en 2024 tras cumplir condena por el Andahuaylazo. Inscribió su partido y se perfila como candidato presidencial 2026 con un discurso nacionalista radical.",
+                fotoResId = R.drawable.candidato_antauro_humala,
                 denuncias = listOf(
                     Denuncia(
                         titulo = "Andahuaylazo",
@@ -318,6 +328,7 @@ object CandidatoData {
                 cargo = Cargo.PRESIDENCIA,
                 region = "Ayacucho",
                 biografia = "Abogado y político veterano. Congresista en múltiples períodos. Candidato presidencial en 2021 donde quedó tercero. Posible candidato para 2026 representando a Acción Popular.",
+                fotoResId = R.drawable.candidato_yonhy_lescano,
                 denuncias = emptyList(),
                 proyectos = listOf(
                     Proyecto(
