@@ -256,3 +256,9 @@ Text Secondary
 **Herramienta:** Figma  
 **Versión:** v1.0  
 **Fecha:** 22 de Octubre 2025
+
+---
+
+<p align="center">
+  CandidatoInfo - Diseño para Transparencia Electoral
+</p>
