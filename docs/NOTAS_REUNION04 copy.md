@@ -69,13 +69,13 @@ app/
 | CompareViewModel                | ✅     | Comparación con selector interactivo      |
 | CandidatoRepository             | ✅     | Simulación de API y obtención de datos    |
 | Pantallas (Home/Detail/Compare) | ✅     | Conectadas a sus ViewModels respectivos   |
-| Documentación técnica           | ✅     | `FUENTES_DATOS.md` y `VIEWMODELS.md`      |
+| Documentación técnica           | ✅     | `FUENTES_DATOS.md` y `README.md`      |
 
 ## 📝 Documentación
 
 Se generó documentación técnica completa:
 - Actualización de `FUENTES_DATOS.md` con arquitectura MVVM
-- Creación de `VIEWMODELS.md` con guías de uso y buenas prácticas
+- Creación de `README.md` con guías de uso y buenas prácticas
 
 ---
 
