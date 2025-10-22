@@ -27,6 +27,7 @@ import com.equipo.candidatoinfo.model.*
 import com.equipo.candidatoinfo.ui.theme.*
 import com.equipo.candidatoinfo.util.IntentUtils
 
+
 @Composable
 fun DetailScreen(
     candidateId: String = "",
@@ -561,116 +562,5 @@ fun ProyectoCard(proyecto: Proyecto) {
                 )
             }
         }
-    }
-}
-// ✅ ============ PREVIEWS ============ ✅
-@Preview(showBackground = true, name = "Perfil Completo - Keiko Fujimori")
-@Composable
-fun PreviewDetailScreenComplete() {
-    CandidatoInfoTheme {
-        val candidato = Candidato(
-            id = "candidato_1",
-            nombre = "Keiko",
-            apellido = "Fujimori",
-            edad = 48,
-            partidoPolitico = "Fuerza Popular",
-            cargo = Cargo.CONGRESO,
-            region = "Lima",
-            biografia = "Política peruana, hija del expresidente Alberto Fujimori. Lideró Fuerza Popular y ha sido candidata presidencial en tres ocasiones.",
-            denuncias = listOf(
-                Denuncia(
-                    titulo = "Caso Odebrecht",
-                    descripcion = "Investigación por presunto lavado de activos relacionado con aportes de Odebrecht a su campaña electoral.",
-                    fecha = "2018",
-                    tipo = TipoDenuncia.PENAL,
-                    estado = EstadoDenuncia.EN_PROCESO
-                ),
-                Denuncia(
-                    titulo = "Obstrucción a la justicia",
-                    descripcion = "Acusación por presunta obstrucción a la justicia en el marco del caso Odebrecht.",
-                    fecha = "2020",
-                    tipo = TipoDenuncia.PENAL,
-                    estado = EstadoDenuncia.EN_PROCESO
-                )
-            ),
-            proyectos = emptyList(),
-            asistencia = 85
-        )
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("Perfil") },
-                    navigationIcon = {
-                        IconButton(onClick = {}) {
-                            Icon(Icons.Default.ArrowBack, "Volver")
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Primary,
-                        titleContentColor = Color.White,
-                        navigationIconContentColor = Color.White
-                    )
-                )
-            }
-        ) { padding ->
-            DetailScreenContent(candidato = candidato, paddingValues = padding)
-        }
-    }
-}
-@Preview(showBackground = true, name = "Header del Candidato")
-@Composable
-fun PreviewCandidatoHeader() {
-    CandidatoInfoTheme {
-        CandidatoHeader(
-            candidato = Candidato(
-                id = "1",
-                nombre = "Verónika",
-                apellido = "Mendoza",
-                edad = 43,
-                partidoPolitico = "Juntos por el Perú",
-                cargo = Cargo.CONGRESO,
-                region = "Cusco",
-                biografia = "Psicóloga y política peruana.",
-                denuncias = emptyList(),
-                proyectos = listOf(
-                    Proyecto(
-                        titulo = "Ley de Consulta Previa",
-                        descripcion = "Proyecto para fortalecer el derecho de consulta previa.",
-                        fecha = "2019",
-                        estado = EstadoProyecto.PRESENTADO
-                    )
-                ),
-                asistencia = 92
-            )
-        )
-    }
-}
-@Preview(showBackground = true, name = "Card de Denuncia")
-@Composable
-fun PreviewDenunciaCard() {
-    CandidatoInfoTheme {
-        DenunciaCard(
-            denuncia = Denuncia(
-                titulo = "Caso Odebrecht",
-                descripcion = "Investigación por presunto lavado de activos relacionado con aportes de Odebrecht a su campaña electoral.",
-                fecha = "2018",
-                tipo = TipoDenuncia.PENAL,
-                estado = EstadoDenuncia.EN_PROCESO
-            )
-        )
-    }
-}
-@Preview(showBackground = true, name = "Card de Proyecto")
-@Composable
-fun PreviewProyectoCard() {
-    CandidatoInfoTheme {
-        ProyectoCard(
-            proyecto = Proyecto(
-                titulo = "Ley de Protección Animal",
-                descripcion = "Iniciativa para proteger los derechos de los animales en el país.",
-                fecha = "2020",
-                estado = EstadoProyecto.APROBADO
-            )
-        )
     }
 }

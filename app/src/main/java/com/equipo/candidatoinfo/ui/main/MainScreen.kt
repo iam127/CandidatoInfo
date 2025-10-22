@@ -1,4 +1,5 @@
 package com.equipo.candidatoinfo.ui.main
+<<<<<<< HEAD
 import androidx.compose.ui.tooling.preview.Preview
 import android.content.Intent
 import androidx.compose.foundation.clickable
@@ -662,3 +663,6 @@ fun CompartirDialog(
         }
     )
 }
+=======
+
+>>>>>>> feature/matias-setup
