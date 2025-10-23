@@ -18,7 +18,6 @@
 
 ---
 
-## 👥 Equipo de Desarrollo
 
 ## 👥 Equipo de Desarrollo
 
