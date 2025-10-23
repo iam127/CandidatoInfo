@@ -32,6 +32,7 @@ import com.equipo.candidatoinfo.ui.theme.*
 fun HomeScreen(
     onNavigateToDetail: (String) -> Unit = {},
     onNavigateToCompare: () -> Unit = {},
+    onNavigateBack: () -> Unit = {},
     viewModel: HomeViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -45,9 +46,20 @@ fun HomeScreen(
                         fontWeight = FontWeight.Bold
                     )
                 },
+                navigationIcon = {  // ✅ AGREGAR ESTE BLOQUE
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Volver",
+                            tint = Color.White
+
+                        )
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Primary,
-                    titleContentColor = Color.White
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
                 )
             )
         },
