@@ -4,22 +4,23 @@
 
 revisar la documentacion del proyecto para una buena presentacion
 
-## 📂 Estructura del Proyecto
+## 📁 Estructura del Proyecto
+```
 app/src/main/java/com/equipo/candidatoinfo/
 ├── ui/
 │   ├── home/
 │   │   ├── HomeScreen.kt
 │   │   └── HomeViewModel.kt
 │   ├── detail/
-│   │   ├── DetailScreen.kt
+│   │   ├── DetailsScreen.kt
 │   │   └── DetailViewModel.kt
-│   ├── compare/
-│   │   ├── CompareScreen.kt
-│   │   └── CompareViewModel.kt
-│   └── theme/
-│       ├── Color.kt
-│       ├── Theme.kt
-│       └── Type.kt
+│   └── compare/
+│       ├── CompareScreen.kt
+│       └── CompareViewModel.kt
+├── theme/
+│   ├── Color.kt
+│   ├── Theme.kt
+│   └── Type.kt
 ├── model/
 │   ├── Candidato.kt
 │   ├── Denuncia.kt
@@ -27,11 +28,10 @@ app/src/main/java/com/equipo/candidatoinfo/
 ├── data/
 │   ├── CandidatoData.kt
 │   └── CandidatoRepository.kt
-├── navigation/
-│   └── Navigation.kt
-├── util/
-│   └── IntentUtils.kt
-└── MainActivity.kt
+└── navigation/
+    ├── Navigation.kt
+    └── IntentsUtils.kt
+```
 
 
 ## documentos en orden
