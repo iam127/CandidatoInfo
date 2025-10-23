@@ -18,7 +18,6 @@
 
 ---
 
-## 👥 Equipo de Desarrollo
 
 ## 👥 Equipo de Desarrollo
 
@@ -34,6 +33,8 @@
 **Fecha:** 22 de Octubre 2025
 
 ---
+## Presentación y demo
+**Enlace:** https://youtu.be/7l83OjLk_WI
 
 ## 🎨 Diseño
 
@@ -301,7 +302,6 @@ Click en el botón ▶️
 - [FUENTES_DATOS.md](./FUENTES_DATOS.md) - Información sobre fuentes oficiales
 - [VIEWMODELS.md](./VIEWMODELS.md) - Guía de arquitectura MVVM
 - [TESTING.md](./TESTING.md) - Reporte de pruebas
-- [PRESENTACION.md](./PRESENTACION.md) - Guía de presentación
 
 ---
 
@@ -310,5 +310,3 @@ Click en el botón ▶️
 **Estado:** ✅ Completado y listo para presentación
 
 ---
-
-
