@@ -4,22 +4,23 @@
 
 Integrar ViewModels para gestionar el estado y la lógica de negocio, implementar el patrón Repository, y conectar la interfaz de usuario con flujos de datos reactivos utilizando StateFlow y Coroutines.
 
-## 📂 Estructura del Proyecto
+## 📁 Estructura del Proyecto
+```
 app/src/main/java/com/equipo/candidatoinfo/
 ├── ui/
 │   ├── home/
 │   │   ├── HomeScreen.kt
 │   │   └── HomeViewModel.kt
 │   ├── detail/
-│   │   ├── DetailScreen.kt
+│   │   ├── DetailsScreen.kt
 │   │   └── DetailViewModel.kt
-│   ├── compare/
-│   │   ├── CompareScreen.kt
-│   │   └── CompareViewModel.kt
-│   └── theme/
-│       ├── Color.kt
-│       ├── Theme.kt
-│       └── Type.kt
+│   └── compare/
+│       ├── CompareScreen.kt
+│       └── CompareViewModel.kt
+├── theme/
+│   ├── Color.kt
+│   ├── Theme.kt
+│   └── Type.kt
 ├── model/
 │   ├── Candidato.kt
 │   ├── Denuncia.kt
@@ -30,8 +31,9 @@ app/src/main/java/com/equipo/candidatoinfo/
 ├── navigation/
 │   └── Navigation.kt
 ├── util/
-│   └── IntentUtils.kt
+│   └── IntentsUtils.kt
 └── MainActivity.kt
+```
 
 
 ## pruebas realizado a la aplicacion
