@@ -1,13 +1,14 @@
-# Día 6 – culminacion y verificacion de documentacion
+# Día 6 – Culminación y Verificación de Documentación
 
 ## 🎯 Objetivo
-
-revisar la documentacion del proyecto para una buena presentacion
+Revisar la documentación del proyecto para una buena presentación
 
 ## 📁 Estructura del Proyecto
 ```
 app/src/main/java/com/equipo/candidatoinfo/
 ├── ui/
+│   ├── main/
+│   │   └── MainScreen.kt
 │   ├── home/
 │   │   ├── HomeScreen.kt
 │   │   └── HomeViewModel.kt
@@ -28,17 +29,17 @@ app/src/main/java/com/equipo/candidatoinfo/
 ├── data/
 │   ├── CandidatoData.kt
 │   └── CandidatoRepository.kt
-└── navigation/
-    ├── Navigation.kt
-    └── IntentsUtils.kt
+├── navigation/
+│   ├── Navigation.kt
+│   └── IntentsUtils.kt
+└── MainActivity.kt
 ```
 
+## 📄 Documentos en Orden
 
-## documentos en orden
-
-- ✅ READNE.md
+- ✅ README.md
 - ✅ FUENTES_DATOS.md
-- ✅ MANUAL_UDUARIO.md
+- ✅ MANUAL_USUARIO.md
 - ✅ NOTAS_REUNION01.md
 - ✅ NOTAS_REUNION02.md
 - ✅ NOTAS_REUNION03.md
@@ -47,8 +48,4 @@ app/src/main/java/com/equipo/candidatoinfo/
 - ✅ NOTAS_REUNION06.md
 - ✅ FIGMA.md
 
-
-## 🎯 Cumplimiento con el  Requerimientos
-
-
-#
+## 🎯 Cumplimiento con los Requerimientos
