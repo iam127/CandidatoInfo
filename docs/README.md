@@ -20,11 +20,13 @@
 
 ## 👥 Equipo de Desarrollo
 
-| Rol                   |             Nombre           |        Responsabilidades                                      |
-|----- -----------------|------------------------------|---------------------------------------------------------------|
-| 🎯 Líder Técnico      | Matías Galván Guerrero      | Arquitectura MVVM, ViewModels, Navegación, Repository, Intents |
-| 🎨 Diseñador UI/UX    | Luis Enrique Galván         | Diseño Figma, Pantallas Compose, Animaciones, Componentes UI   |
-| 📝 Documentador       | Wilson López                | Modelos de datos, Datos verificados, Documentación, Testing    |
+## 👥 Equipo de Desarrollo
+
+| Rol | Nombre | Responsabilidades |
+|-----|--------|-------------------|
+| 🔴 Líder Técnico | Matías Galván Guerrero | Arquitectura MVVM, ViewModels, Navegación, Repository, Intents |
+| 🎨 Diseñador UI/UX | Luis Enrique Galván Morales | Diseño Figma, Pantallas Compose, Animaciones, Componentes UI |
+| 📚 Documentador | Wilson López | Modelos de datos, Datos verificados, Documentación, Testing |
 
 **Docente:** Juan León S.  
 **Curso:** Aplicaciones Móviles con Android  
