@@ -259,13 +259,16 @@ Click en el botón ▶️
 ## 📸 Capturas de Pantalla
 
 ### Pantalla Home
-*Lista de candidatos con búsqueda y filtros*
+
+<img width="414" height="929" alt="image" src="https://github.com/user-attachments/assets/10dd5f7c-4b33-42c1-9c75-d97a5b6f946f" />
 
 ### Pantalla Detalle
-*Información completa con denuncias y proyectos*
+
+<img width="417" height="929" alt="image" src="https://github.com/user-attachments/assets/7f07a08f-1491-492f-9b37-f10101c6f3ed" />
 
 ### Pantalla Comparador
-*Comparación lado a lado de candidatos*
+
+<img width="411" height="928" alt="image" src="https://github.com/user-attachments/assets/9756fb2a-b88d-4051-9e00-3fbc8466004b" />
 
 ---
 
