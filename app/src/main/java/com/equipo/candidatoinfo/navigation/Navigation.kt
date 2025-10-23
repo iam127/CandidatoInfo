@@ -1,4 +1,3 @@
-
 package com.equipo.candidatoinfo.navigation
 
 import androidx.compose.runtime.Composable
@@ -27,9 +26,9 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Main.route  // ✅ Empieza en Main
+        startDestination = Screen.Main.route
     ) {
-        // ===== MAIN SCREEN (Pantalla inicial) =====
+        // ===== MAIN SCREEN =====
         composable(Screen.Main.route) {
             MainScreen(
                 onNavigateToCandidatos = {
@@ -41,7 +40,7 @@ fun AppNavigation() {
             )
         }
 
-        // ===== HOME SCREEN (Lista de candidatos) =====
+        // ===== HOME SCREEN =====
         composable(Screen.Home.route) {
             HomeScreen(
                 onNavigateToDetail = { id ->
@@ -49,11 +48,14 @@ fun AppNavigation() {
                 },
                 onNavigateToCompare = {
                     navController.navigate(Screen.Compare.route)
+                },
+                onNavigateBack = {  // ✅ AGREGAR ESTO
+                    navController.popBackStack()
                 }
             )
         }
 
-        // ===== DETAIL SCREEN (Perfil del candidato) =====
+        // ===== DETAIL SCREEN =====
         composable(
             route = Screen.Detail.route,
             arguments = listOf(
@@ -71,7 +73,7 @@ fun AppNavigation() {
             )
         }
 
-        // ===== COMPARE SCREEN (Comparador) =====
+        // ===== COMPARE SCREEN =====
         composable(Screen.Compare.route) {
             CompareScreen(
                 onNavigateBack = {

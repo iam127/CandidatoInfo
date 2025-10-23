@@ -1,5 +1,4 @@
 package com.equipo.candidatoinfo.ui.main
-<<<<<<< HEAD
 import androidx.compose.ui.tooling.preview.Preview
 import android.content.Intent
 import androidx.compose.foundation.clickable
@@ -255,7 +254,7 @@ fun MainScreen(
                     • Proyectos de ley
                     • Fuentes oficiales
                     
-                    ¡Vota informado! 🗳
+                    ¡Vota informado! 🗳️
                 """.trimIndent()
 
                 IntentUtils.shareText(context, shareText)
@@ -484,25 +483,25 @@ fun FuentesOficialesCard(
             Spacer(modifier = Modifier.height(12.dp))
 
             FuenteItem(
-                emoji = "🏛",
+                emoji = "🏛️",
                 text = "Jurado Nacional de Elecciones (JNE)",
                 url = "https://www.jne.gob.pe",
                 onClick = onFuenteClick
             )
             FuenteItem(
-                emoji = "🏛",
+                emoji = "🏛️",
                 text = "Congreso de la República",
                 url = "https://www.congreso.gob.pe",
                 onClick = onFuenteClick
             )
             FuenteItem(
-                emoji = "⚖",
+                emoji = "⚖️",
                 text = "Poder Judicial del Perú",
                 url = "https://www.pj.gob.pe",
                 onClick = onFuenteClick
             )
             FuenteItem(
-                emoji = "🗳",
+                emoji = "🗳️",
                 text = "ONPE - Oficina Nacional de Procesos Electorales",
                 url = "https://www.onpe.gob.pe",
                 onClick = onFuenteClick
@@ -663,6 +662,3 @@ fun CompartirDialog(
         }
     )
 }
-=======
-
->>>>>>> feature/matias-setup
