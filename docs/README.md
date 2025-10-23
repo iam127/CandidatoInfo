@@ -23,7 +23,7 @@
 | Rol                   |             Nombre           |        Responsabilidades                                      |
 |----- -----------------|------------------------------|---------------------------------------------------------------|
 | 🎯 Líder Técnico      | Matías Galván Guerrero      | Arquitectura MVVM, ViewModels, Navegación, Repository, Intents |
-| 🎨 Diseñador UI/UX    | Luis Enrique Galván Montoya | Diseño Figma, Pantallas Compose, Animaciones, Componentes UI   |
+| 🎨 Diseñador UI/UX    | Luis Enrique Galván         | Diseño Figma, Pantallas Compose, Animaciones, Componentes UI   |
 | 📝 Documentador       | Wilson López                | Modelos de datos, Datos verificados, Documentación, Testing    |
 
 **Docente:** Juan León S.  
